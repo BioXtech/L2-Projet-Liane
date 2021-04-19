@@ -26,7 +26,7 @@ int main()
     initJungle(&jungle);
 
     liane1 = ajoutNombreALiane(liane1,1);
-    liane1 = ajoutNombreALiane(liane1,2x);
+    liane1 = ajoutNombreALiane(liane1,2);
     liane1 = ajoutNombreALiane(liane1,3);
     liane1 = ajoutNombreALiane(liane1,4);
 
@@ -42,6 +42,6 @@ int main()
     jungle = ajoutLianeAJungle(jungle,liane2);
     jungle = ajoutLianeAJungle(jungle,liane3);
 
-    afficheJungle(jungle);
+    afficheJungle(jungle,singe);
     return 0;
 }
