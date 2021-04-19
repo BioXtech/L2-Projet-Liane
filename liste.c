@@ -1,10 +1,9 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
-
 #include "liste.h"
 
-//initListe ne fait pas de malloc, juste une initialisation a NULL du pointeur de liste
+//initListe ne fait pas de malloc, juste une initialisation � NULL du pointeur de liste
 void initListe(T_liste *l)
 {
     *l=NULL;
@@ -42,16 +41,17 @@ void afficheListeV1(T_liste l)
     printf("Liste\n-----\n");
     while(ptrCourant != NULL)
     {
-        printf("%p ",ptrCourant->data);
+        printf("%d ",*(ptrCourant->data));
         ptrCourant = ptrCourant->suiv;
     }
     printf("\n-----\n\n");
 }
 
-T_liste ajoutEnTete(T_liste l, void *ptrData)
+T_liste ajoutEnTete(T_liste l, int mydata)
 {
     T_liste newl = (T_liste)malloc(sizeof(struct T_cell));
-    newl -> data = ptrData;
+    newl -> data = (int *)malloc(sizeof(int));
+    *(newl -> data) = mydata;
 
     if (listeVide(l))
     {
@@ -70,22 +70,21 @@ T_liste ajoutEnTete(T_liste l, void *ptrData)
 
 void debug(T_liste l)
 {
-    T_liste ptrCourant = l;
+    struct T_cell *ptrCourant = l;
     printf("Liste\n-----\n");
     while(ptrCourant != NULL)
     {
         printf("##########\n");
-        printf("# Ptr case d'avant: %p\n", ptrCourant->prec);
-        printf("# Ptr de la case courante: %p\n",ptrCourant);
-        printf("# Ptr data : %p\n",ptrCourant->data);
-        printf("# Ptr case d'apres: %p\n", ptrCourant->suiv);
+        printf("# Ptr case d'avant: %X\n", ptrCourant->prec);
+        printf("# Ptr de la case courante: %X\n",ptrCourant);
+        printf("# Valeur : %d\n",*(ptrCourant->data));
+        printf("# Ptr case d'apres: %X\n", ptrCourant->suiv);
         printf("##########\n");
         ptrCourant = ptrCourant->suiv;
     }
     printf("-----\n\n");
 }
 
-/*
 //dans cette version "l" est un pointeur sur le pointeur de la 1ere cellule.
 void ajoutEnTetePtr2Ptr(T_liste *l, int mydata)
 {
@@ -107,13 +106,13 @@ void ajoutEnTetePtr2Ptr(T_liste *l, int mydata)
     //on modifie l'adresse de la t�te de la liste, soit le contenu point� par l
     *l=nouv;
 };
-*/
 
 
-T_liste ajoutEnFin(T_liste l, void *ptrData)
+T_liste ajoutEnFin(T_liste l, int mydata)
 {
     T_liste newl = (T_liste)malloc(sizeof(struct T_cell));
-    newl -> data = ptrData;
+    newl -> data = (int *)malloc(sizeof(int));
+    *(newl -> data) = mydata;
 
     if (listeVide(l))
     {
@@ -138,7 +137,7 @@ T_liste ajoutEnFin(T_liste l, void *ptrData)
 }
 
 
-T_liste ajoutEnN(T_liste l, int pos, void *ptrData)
+T_liste ajoutEnN(T_liste l, int pos, int mydata)
 {
 
     int len = 0;
@@ -151,16 +150,17 @@ T_liste ajoutEnN(T_liste l, int pos, void *ptrData)
 
     if (pos == 0)
     {
-        l = ajoutEnTete(l, ptrData);
+        l = ajoutEnTete(l, mydata);
     }
     else if(pos >= len)
     {
-        l = ajoutEnFin(l, ptrData);
+        l = ajoutEnFin(l, mydata);
     }
     else
     {
         T_liste newl = (T_liste)malloc(sizeof(struct T_cell));
-        newl -> data = ptrData;
+        newl -> data = (int *)malloc(sizeof(int));
+        *(newl -> data) = mydata;
 
         T_liste temp_l = l;
         T_liste temp_l2 = l;
@@ -214,7 +214,6 @@ T_liste suppEnN(T_liste l, int pos)
         perror("Erreur : La liste est vide !");
         return l;
     }
-
     T_liste ptrCourant = l;
     for(int i = 0; i < pos; i++)
     {
@@ -223,25 +222,15 @@ T_liste suppEnN(T_liste l, int pos)
             perror("Erreur : la liste n'est pas assez longue !");
             return l;
         }
-
         ptrCourant = ptrCourant->suiv;
     }
-
     T_liste casePrec = ptrCourant->prec;
-    T_liste caseSuiv = ptrCourant->suiv;
-
-    casePrec->suiv = caseSuiv;
-    caseSuiv->prec = casePrec;
-
-    free(ptrCourant);
-
-    return l;
 }
 
 
 T_liste getptrLastCell(T_liste l)
 {
-    T_liste ptrCourant = l;
+    struct T_cell *ptrCourant = l;
     if (listeVide(l))
     {
         printf("\nErreur getptrLastCell : Pointeur NULL");
@@ -249,7 +238,7 @@ T_liste getptrLastCell(T_liste l)
     }
     else
     {
-        // On deroule la liste afin de retourner le pointeur de la derniere case
+        // On rembobine la liste afin de retourner le pointeur de la première case
         while(ptrCourant -> suiv != NULL)
         {
             ptrCourant = ptrCourant->suiv;
@@ -260,7 +249,7 @@ T_liste getptrLastCell(T_liste l)
 
 T_liste getptrFirstCell(T_liste l)
 {
-    T_liste ptrCourant = l;
+    struct T_cell *ptrCourant = l;
     if (listeVide(l))
     {
         printf("\nErreur getptrFirstCell : Pointeur NULL, Liste vide");
@@ -280,7 +269,7 @@ T_liste getptrFirstCell(T_liste l)
 
 T_liste getptrNextCell(T_liste l)
 {
-    T_liste ptrCourant = l;
+    struct T_cell *ptrCourant = l;
     if (listeVide(l))
     {
         printf("\nErreur getptrNextCell : Pointeur NULL, liste vide");
@@ -294,7 +283,7 @@ T_liste getptrNextCell(T_liste l)
 
 T_liste getptrPrevCell(T_liste l)
 {
-    T_liste ptrCourant = l;
+    struct T_cell *ptrCourant = l;
     if (listeVide(l))
     {
         printf("\nErreur getptrPrevCell : Pointeur NULL");
@@ -306,7 +295,7 @@ T_liste getptrPrevCell(T_liste l)
     }
 }
 
-void* getPtrData(T_liste l)
+int* getPtrData(T_liste l)
 {
     struct T_cell *ptrCourant = l;
     if (listeVide(l))
@@ -324,31 +313,32 @@ void swapPtrData( T_liste source, T_liste destination )
 {
     if (listeVide(source) || listeVide(destination))
     {
-        return;
+        return NULL;
     }
     else
     {
-        void *data_temp = destination->data;
+        int *entier_temp = destination->data;
         destination->data = source->data;
-        source->data = data_temp;
+        source->data = entier_temp;
     }
 }
 
 
 int getNbreCell(T_liste l)
 {
-    T_liste ptrCourant = l;
+    struct T_cell *ptrCourant = l;
     int nombre = 1;
     if (listeVide(l))
     {
-        return 0;
+        nombre = 0;
+        return nombre;
     }
     else
     {
         while (ptrCourant->suiv != NULL)
         {
             ptrCourant = ptrCourant->suiv;
-            nombre++;
+            nombre = nombre + 1;
         }
         printf("\n Le nombre de cellules est : %d\n", nombre);
         return nombre;
@@ -381,12 +371,12 @@ T_liste creatNewListeFromFusion(T_liste l1, T_liste l2)
     {
         while(ptrCourantl1 != NULL)
         {
-            liste_finale = ajoutEnFin(liste_finale, getPtrData(ptrCourantl1));
+            liste_finale = ajoutEnFin(liste_finale, *(getPtrData(ptrCourantl1)));
             ptrCourantl1 = ptrCourantl1->suiv;
         }
         while(ptrCourantl2 != NULL)
         {
-            liste_finale = ajoutEnFin(liste_finale, getPtrData(ptrCourantl2));
+            liste_finale = ajoutEnFin(liste_finale, *(getPtrData(ptrCourantl2)));
             ptrCourantl2 = ptrCourantl2->suiv;
         }
         return liste_finale;
@@ -411,15 +401,15 @@ T_liste addBehind(T_liste debut, T_liste suite)
     {
         while(ptrCourantl2 != NULL)
         {
-            void* data = getPtrData(ptrCourantl2);
-            debut = ajoutEnFin(debut, data);
+            int valeur = *(getPtrData(ptrCourantl2));
+            debut = ajoutEnFin(debut, valeur);
             ptrCourantl2 = ptrCourantl2->suiv;
         }
         return debut;
     }
 }
 
-/*
+
 T_liste findCell(T_liste l, int data)
 {
     T_liste ptrCourant = l;
@@ -446,8 +436,7 @@ T_liste findCell(T_liste l, int data)
         }
     }
 }
-*/
-/*
+
 int getOccurences(T_liste l, int data)
 {
     T_liste ptrCourant = l;
@@ -472,5 +461,5 @@ int getOccurences(T_liste l, int data)
     printf("\nLe nombre d'occurence de %d est %d", data, occurence);
     return occurence;
 }
-*/
+
 //A vous la suite

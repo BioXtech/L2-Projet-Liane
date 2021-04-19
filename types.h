@@ -3,6 +3,14 @@
 
 #include "liste.h"
 
+typedef T_liste T_liane;
+
+typedef struct T_jungle_cell{
+    struct T_jungle_cell* suiv;
+    struct T_jungle_cell* prec;
+    T_liane* courante;
+}* T_jungle;
+
 typedef T_liste T_liste_int;
 
 typedef struct
