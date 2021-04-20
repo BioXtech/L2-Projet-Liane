@@ -1,1 +1,5 @@
 TODO LIST
+
+InitSinge: verifier s'il n'y a pas un ajout en double dans la liste
+
+afficheJungle: print les lianes dans l'autre sens en mettant la premier liane en bas.

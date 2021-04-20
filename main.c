@@ -17,14 +17,13 @@ int main()
 
     T_liane liane1, liane2, liane3;
     T_jungle jungle;
-    T_singeV1 singe;
+    T_singeV1 singe = initSinge();
 
 
     initLiane(&liane1);
     initLiane(&liane2);
     initLiane(&liane3);
     initJungle(&jungle);
-    singe = initSinge();
 
     liane1 = ajoutNombreALiane(liane1,1);
     liane1 = ajoutNombreALiane(liane1,2);
@@ -38,11 +37,12 @@ int main()
     liane3 = ajoutNombreALiane(liane3,2);
     liane3 = ajoutNombreALiane(liane3,1);
 
-
-    jungle = ajoutLianeAJungle(jungle,liane1);
-    jungle = ajoutLianeAJungle(jungle,liane2);
-    jungle = ajoutLianeAJungle(jungle,liane3);
+    jungle = ajoutLianeAJungle(jungle,&liane1);
+    jungle = ajoutLianeAJungle(jungle,&liane2);
+    jungle = ajoutLianeAJungle(jungle,&liane3);
 
     afficheJungle(jungle,singe);
+
+    afficheListePref(singe);
     return 0;
 }

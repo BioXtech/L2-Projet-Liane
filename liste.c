@@ -41,7 +41,7 @@ void afficheListeV1(T_liste l)
     printf("Liste\n-----\n");
     while(ptrCourant != NULL)
     {
-        printf("%d ",*(ptrCourant->data));
+        printf("%d\n",*(ptrCourant->data));
         ptrCourant = ptrCourant->suiv;
     }
     printf("\n-----\n\n");

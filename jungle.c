@@ -18,7 +18,7 @@ bool jungleVide(T_jungle j){
 }
 
 T_jungle getNextLiane(T_jungle j){
-    struct T_jungle_cell * ptrCourant = j;
+    T_jungle ptrCourant = j;
     if (jungleVide(j))
     {
         printf("\nErreur getNextLiane : Liste vide");
@@ -31,7 +31,7 @@ T_jungle getNextLiane(T_jungle j){
 }
 
 T_jungle getPrecLiane(T_jungle j){
-    struct T_jungle_cell * ptrCourant = j;
+    T_jungle ptrCourant = j;
     if (jungleVide(j))
     {
         printf("\nErreur getPrecLiane : Liste vide");
@@ -44,7 +44,7 @@ T_jungle getPrecLiane(T_jungle j){
 }
 
 T_liane* getLiane(T_jungle j){
-    struct T_jungle_cell * ptrCourant = j;
+    T_jungle ptrCourant = j;
     if (jungleVide(j))
     {
         printf("\nErreur getLiane : Liste vide");
@@ -57,7 +57,7 @@ T_liane* getLiane(T_jungle j){
 }
 
 int getNombreLiane(T_jungle j){
-    struct T_jungle_cell * ptrCourant = j;
+    T_jungle ptrCourant = j;
     int compteur = 1;
     if (jungleVide(j))
     {
@@ -78,6 +78,44 @@ T_liane ajoutNombreALiane(T_liane l, int nombre){
     return ajoutEnFin(l,nombre);
 }
 
-T_jungle ajoutLianeAJungle(T_jungle j, T_liane l){
+T_jungle ajoutLianeAJungle(T_jungle j, T_liane *l){
+    T_jungle newj = (T_jungle)malloc(sizeof(struct T_jungle_cell));
+    newj->courante = l;
+    if(jungleVide(j)){
+        newj->prec = NULL;
+        newj->suiv = NULL;
+        return newj;
+    }
+    else{
+        T_jungle temp = j;
+        while(temp -> suiv != NULL){
+            temp = temp -> suiv;
+        }
+        newj -> prec = temp;
+        newj -> suiv = NULL;
+        temp -> suiv = newj;
+    }
 
+    return j;
+}
+
+void debugJungle(T_jungle j)
+{
+    T_jungle ptrCourant = j;
+    printf("Jungle\n-----\n");
+    while(ptrCourant != NULL)
+    {
+        printf("##########\n");
+        printf("# Ptr case d'avant: %X\n", ptrCourant->prec);
+        printf("# Ptr de la case courante: %X\n",ptrCourant);
+        printf("# Ptr vers la liane : %X\n",ptrCourant->courante);
+        printf("# Ptr case d'apres: %X\n", ptrCourant->suiv);
+        printf("##########\n");
+        ptrCourant = ptrCourant->suiv;
+    }
+    printf("-----\n\n");
+}
+
+void afficheListePref(T_singeV1 s){
+    afficheListeV1(s.listeIntPreferes);
 }

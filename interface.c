@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "interface.h"
 #include "liste.h"
@@ -39,27 +41,29 @@ T_singeV1 initSinge(){
     T_singeV1 singe;
     printf("\n########## INITIALISATION DU SINGE ##########");
     int id;
-    printf("\nSaisissez l'ID du singe (numéro entre 1 et 50 : ");
+    printf("\nSaisissez l'ID du singe (numero entre 1 et 50 : ");
     scanf("%d", &id);
     singe.id = id;
 
     char nom[10];
     printf("\nSaisissez le nom a attribuer au singe : ");
     scanf("%s", nom);
-    singe.nom[10] = nom[10];
+    strcpy(singe.nom,nom);
 
-    singe.posX = 0;
-    singe.posY = 0;
+    singe.posX = 1;
+    singe.posY = 1;
 
     T_liste liste_pref;
     initListe(&liste_pref);
-    int val;
+    int val = 0;
 
     while (val > -1)
     {
         printf("\nSaisissez une valeur a ajouter a la liste du singe (-1 pour arreter) : ");
         scanf("%d", &val);
-        ajoutEnFin(liste_pref, val);
+        if(val >= 0 && val <= 9){
+            liste_pref = ajoutEnFin(liste_pref, val);
+        }
     }
     singe.listeIntPreferes = liste_pref;
 
