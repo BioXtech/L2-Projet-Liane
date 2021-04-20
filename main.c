@@ -24,6 +24,7 @@ int main()
     initLiane(&liane2);
     initLiane(&liane3);
     initJungle(&jungle);
+    singe = initSinge();
 
     liane1 = ajoutNombreALiane(liane1,1);
     liane1 = ajoutNombreALiane(liane1,2);
