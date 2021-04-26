@@ -163,3 +163,19 @@ T_jungle genererJungle()
     }
     return jungle;
 }
+
+
+bool verifHaut(T_jungle jungle, T_singe singe)
+{
+    T_liane liane_suivante = *(getLiane(getNextLiane(jungle)));
+    if (singe.posY == 0)
+    {
+        return false;
+    }
+    int nombreCible = *(getPtrData(getCellEnN(liane_suivante, singe.posY-1));
+    if (getOccurences(singe.listeIntPreferes,nombreCible) >= 1)
+    {
+        return true;
+    }
+    return false;
+}

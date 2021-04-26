@@ -24,13 +24,14 @@ void debugJungle(T_jungle jungle);
 
 void afficheListePref(T_singeV1 singe);
 
-bool verifHaut(T_jungle jungle, T_singeV1 singe);
-bool verifFace(T_jungle jungle, T_singeV1 singe);
-bool verifBas(T_jungle jungle, T_singeV1 singe);
+bool verifHaut(T_jungle jungle, T_singe singe);
+bool verifFace(T_jungle jungle, T_singe singe);
+bool verifBas(T_jungle jungle, T_singe singe);
+bool verifGaucheDroite(T_jungle jungle, T_singe singe);
 
-void allerEnHaut(T_singeV1* singe);
-void allerEnFace(T_singeV1* singe);
-void allerEnBas(T_singeV1* singe);
+void allerEnHaut(T_singe* singe);
+void allerEnFace(T_singe* singe);
+void allerEnBas(T_singe* singe);
 
 
 void afficheListePref(T_singe s);
