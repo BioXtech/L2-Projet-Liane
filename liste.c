@@ -307,9 +307,11 @@ T_liste getptrPrevCell(T_liste l)
     }
 }
 
-T_liste getCellEnN(T_liste liste, int n){
+T_liste getCellEnN(T_liste liste, int n)
+{
     T_liste ptrCourant = liste;
-    for(int i = 0; i <= n; i++){
+    for(int i = 0; i <= n; i++)
+    {
         ptrCourant = getptrNextCell(ptrCourant);
     }
     return ptrCourant;

@@ -5,19 +5,23 @@
 #include "jungle.h"
 #include "liste.h"
 
-void initLiane(T_liane* l){
+void initLiane(T_liane *l)
+{
     *l = NULL;
 }
 
-void initJungle(T_jungle* j){
+void initJungle(T_jungle *j)
+{
     *j = NULL;
 }
 
-bool jungleVide(T_jungle j){
-    return (j==NULL);
+bool jungleVide(T_jungle j)
+{
+    return (j == NULL);
 }
 
-T_jungle getNextLiane(T_jungle j){
+T_jungle getNextLiane(T_jungle j)
+{
     T_jungle ptrCourant = j;
     if (jungleVide(j))
     {
@@ -30,7 +34,8 @@ T_jungle getNextLiane(T_jungle j){
     }
 }
 
-T_jungle getPrecLiane(T_jungle j){
+T_jungle getPrecLiane(T_jungle j)
+{
     T_jungle ptrCourant = j;
     if (jungleVide(j))
     {
@@ -43,7 +48,8 @@ T_jungle getPrecLiane(T_jungle j){
     }
 }
 
-T_liane* getLiane(T_jungle j){
+T_liane *getLiane(T_jungle j)
+{
     T_jungle ptrCourant = j;
     if (jungleVide(j))
     {
@@ -56,7 +62,18 @@ T_liane* getLiane(T_jungle j){
     }
 }
 
-int getNombreLiane(T_jungle j){
+T_jungle getLianeEnN(T_jungle jungle, int n)
+{
+    T_jungle ptrCourant = jungle;
+    for (int i = 0; i <= n; i++)
+    {
+        ptrCourant = getNextLiane(ptrCourant);
+    }
+    return ptrCourant;
+}
+
+int getNombreLiane(T_jungle j)
+{
     T_jungle ptrCourant = j;
     int compteur = 1;
     if (jungleVide(j))
@@ -65,7 +82,7 @@ int getNombreLiane(T_jungle j){
     }
     else
     {
-        while (ptrCourant->suiv !=NULL)
+        while (ptrCourant->suiv != NULL)
         {
             ptrCourant = ptrCourant->suiv;
             compteur += 1;
@@ -74,28 +91,33 @@ int getNombreLiane(T_jungle j){
     }
 }
 
-T_liane ajoutNombreALiane(T_liane l, int nombre){
-    return ajoutEnFin(l,nombre);
+T_liane ajoutNombreALiane(T_liane l, int nombre)
+{
+    return ajoutEnFin(l, nombre);
 }
 
-T_jungle ajoutLianeAJungle(T_jungle j, T_liane l){
+T_jungle ajoutLianeAJungle(T_jungle j, T_liane l)
+{
     T_jungle newj = (T_jungle)malloc(sizeof(struct T_jungle_cell));
     newj->courante = (T_liane *)malloc(sizeof(T_liane));
     *(newj->courante) = l;
 
-    if(jungleVide(j)){
+    if (jungleVide(j))
+    {
         newj->prec = NULL;
         newj->suiv = NULL;
         return newj;
     }
-    else{
+    else
+    {
         T_jungle temp = j;
-        while(temp -> suiv != NULL){
-            temp = temp -> suiv;
+        while (temp->suiv != NULL)
+        {
+            temp = temp->suiv;
         }
-        newj -> prec = temp;
-        newj -> suiv = NULL;
-        temp -> suiv = newj;
+        newj->prec = temp;
+        newj->suiv = NULL;
+        temp->suiv = newj;
     }
 
     return j;
@@ -105,12 +127,12 @@ void debugJungle(T_jungle j)
 {
     T_jungle ptrCourant = j;
     printf("Jungle\n-----\n");
-    while(ptrCourant != NULL)
+    while (ptrCourant != NULL)
     {
         printf("##########\n");
         printf("# Ptr case d'avant: %X\n", ptrCourant->prec);
-        printf("# Ptr de la case courante: %X\n",ptrCourant);
-        printf("# Ptr vers la liane : %X\n",ptrCourant->courante);
+        printf("# Ptr de la case courante: %X\n", ptrCourant);
+        printf("# Ptr vers la liane : %X\n", ptrCourant->courante);
         printf("# Ptr case d'apres: %X\n", ptrCourant->suiv);
         printf("##########\n");
         ptrCourant = ptrCourant->suiv;
@@ -118,7 +140,8 @@ void debugJungle(T_jungle j)
     printf("-----\n\n");
 }
 
-void afficheListePref(T_singe s){
+void afficheListePref(T_singe s)
+{
     afficheListeV1(s.listeIntPreferes);
 }
 
@@ -133,12 +156,12 @@ T_liane genererLiane()
     initLiane(&liane);
     int longueur_liane, valeur;
 
-    longueur_liane = (rand() % (LONGUEUR_MAX-LONGUEUR_MIN-1) + LONGUEUR_MIN);
+    longueur_liane = (rand() % (LONGUEUR_MAX - LONGUEUR_MIN - 1) + LONGUEUR_MIN);
 
-    for (int i=0; i<longueur_liane; i++)
+    for (int i = 0; i < longueur_liane; i++)
     {
-        valeur = (rand() % (VAL_MAX-VAL_MIN-1) + VAL_MIN);
-        liane = ajoutNombreALiane(liane,valeur);
+        valeur = (rand() % (VAL_MAX - VAL_MIN - 1) + VAL_MIN);
+        liane = ajoutNombreALiane(liane, valeur);
     }
 
     return liane;
@@ -154,16 +177,15 @@ T_jungle genererJungle()
     T_liane liane;
     int nombre_lianes;
 
-    nombre_lianes = (rand() % (NOMBRE_MAX_LIANES-NOMBRE_MIN_LIANES-1) + NOMBRE_MIN_LIANES);
+    nombre_lianes = (rand() % (NOMBRE_MAX_LIANES - NOMBRE_MIN_LIANES - 1) + NOMBRE_MIN_LIANES);
 
-    for (int i=0; i<nombre_lianes; i++)
+    for (int i = 0; i < nombre_lianes; i++)
     {
         liane = genererLiane();
-        jungle = ajoutLianeAJungle(jungle,liane);
+        jungle = ajoutLianeAJungle(jungle, liane);
     }
     return jungle;
 }
-
 
 bool verifHaut(T_jungle jungle, T_singe singe)
 {
@@ -173,9 +195,25 @@ bool verifHaut(T_jungle jungle, T_singe singe)
         return false;
     }
     int nombreCible = *(getPtrData(getCellEnN(liane_suivante, singe.posY-1));
-    if (getOccurences(singe.listeIntPreferes,nombreCible) >= 1)
+                        if (getOccurences(singe.listeIntPreferes,nombreCible) >= 1)
+{
+    return true;
+}
+return false;
+}
+
+bool verifBas(T_jungle jungle, T_singe singe)
+{
+    T_liane lianeCourante = *(getLiane(jungle)),
+            lianeSuivante = *(getLiane(getNextLiane(jungle)));
+
+    if (getNbreCell(lianeSuiv) >= getNbreCell(lianeCourante) + 2)
     {
-        return true;
+        int *nombreCible = getPtrData(getptrCellEnN(lianeSuivante, singe.posY + 2));
+        if (getOccurences(singe.listeIntPreferes, *nombreCible) > 0)
+        {
+            return true;
+        }
     }
     return false;
 }

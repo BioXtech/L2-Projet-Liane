@@ -3,7 +3,8 @@
 
 #include <stdbool.h>
 
-typedef struct T_cell{
+typedef struct T_cell
+{
 
     struct T_cell *suiv;
     struct T_cell *prec;

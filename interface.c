@@ -11,10 +11,12 @@ void afficheLiane(T_liane l, T_singe s, int posX)
     int posY = 0;
     while(!listeVide(ptrCourant))
     {
-        if(posX == s.posX && posY == s.posY){
+        if(posX == s.posX && posY == s.posY)
+        {
             printf("-%c-", s.nom[0]);
         }
-        else{
+        else
+        {
             printf("-%d-", *getPtrData(ptrCourant));
         }
         posY++;
@@ -37,7 +39,8 @@ void afficheJungle(T_jungle j, T_singe s)
     printf("\n############################\n");
 }
 
-T_singe initSinge(){
+T_singe initSinge()
+{
     T_singe singe;
     printf("\n########## INITIALISATION DU SINGE ##########");
     int id;
@@ -61,7 +64,8 @@ T_singe initSinge(){
     {
         printf("\nSaisissez une valeur a ajouter a la liste du singe (-1 pour arreter) : ");
         scanf("%d", &val);
-        if(val >= 0 && val <= 9){
+        if(val >= 0 && val <= 9)
+        {
             liste_pref = ajoutEnFin(liste_pref, val);
         }
     }

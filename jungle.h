@@ -6,14 +6,16 @@
 #include "liste.h"
 #include "types.h"
 
-void initLiane(T_liane* liane);
-void initJungle(T_jungle* jungle);
+void initLiane(T_liane *liane);
+void initJungle(T_jungle *jungle);
 
 bool jungleVide(T_jungle jungle);
 
 T_jungle getNextLiane(T_jungle jungle);
 T_jungle getPrecLiane(T_jungle jungle);
-T_liane* getLiane(T_jungle jungle);
+
+T_liane *getLiane(T_jungle jungle);
+T_liane getLianeEnN(T_jungle jungle, int n);
 
 int getNombreLiane(T_jungle jungle);
 
@@ -29,15 +31,13 @@ bool verifFace(T_jungle jungle, T_singe singe);
 bool verifBas(T_jungle jungle, T_singe singe);
 bool verifGaucheDroite(T_jungle jungle, T_singe singe);
 
-void allerEnHaut(T_singe* singe);
-void allerEnFace(T_singe* singe);
-void allerEnBas(T_singe* singe);
-
+void allerEnHaut(T_singe *singe);
+void allerEnFace(T_singe *singe);
+void allerEnBas(T_singe *singe);
 
 void afficheListePref(T_singe s);
 
 T_liane genererLiane();
 T_jungle genererJungle();
-
 
 #endif // JUNGLE_H_INCLUDED
