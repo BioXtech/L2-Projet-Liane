@@ -18,7 +18,7 @@ T_liane* getLiane(T_jungle jungle);
 int getNombreLiane(T_jungle jungle);
 
 T_liane ajoutNombreALiane(T_liane liane, int nombre);
-T_jungle ajoutLianeAJungle(T_jungle jungle, T_liane *liane);
+T_jungle ajoutLianeAJungle(T_jungle jungle, T_liane liane);
 
 void debugJungle(T_jungle jungle);
 
