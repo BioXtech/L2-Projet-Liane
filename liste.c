@@ -13,7 +13,7 @@ void initListe(T_liste *l)
 bool listeVide( T_liste l)
 {
     return (l==NULL);
-};
+}
 
 //A vous la suite
 /*
@@ -44,7 +44,7 @@ void afficheListeV1(T_liste l)
         printf("%d\n",*(ptrCourant->data));
         ptrCourant = ptrCourant->suiv;
     }
-    printf("\n-----\n\n");
+    printf("-----\n\n");
 }
 
 T_liste ajoutEnTete(T_liste l, int mydata)
@@ -105,7 +105,7 @@ void ajoutEnTetePtr2Ptr(T_liste *l, int mydata)
     }
     //on modifie l'adresse de la t�te de la liste, soit le contenu point� par l
     *l=nouv;
-};
+}
 
 
 T_liste ajoutEnFin(T_liste l, int mydata)
@@ -214,6 +214,7 @@ T_liste suppEnN(T_liste l, int pos)
         perror("Erreur : La liste est vide !");
         return l;
     }
+
     T_liste ptrCourant = l;
     for(int i = 0; i < pos; i++)
     {
@@ -222,9 +223,20 @@ T_liste suppEnN(T_liste l, int pos)
             perror("Erreur : la liste n'est pas assez longue !");
             return l;
         }
+
         ptrCourant = ptrCourant->suiv;
     }
+
     T_liste casePrec = ptrCourant->prec;
+    T_liste caseSuiv = ptrCourant->suiv;
+
+    casePrec->suiv = caseSuiv;
+    caseSuiv->prec = casePrec;
+
+    free(ptrCourant->data);
+    free(ptrCourant);
+
+    return l;
 }
 
 
@@ -313,7 +325,7 @@ void swapPtrData( T_liste source, T_liste destination )
 {
     if (listeVide(source) || listeVide(destination))
     {
-        return NULL;
+        return;
     }
     else
     {
