@@ -78,9 +78,11 @@ T_liane ajoutNombreALiane(T_liane l, int nombre){
     return ajoutEnFin(l,nombre);
 }
 
-T_jungle ajoutLianeAJungle(T_jungle j, T_liane *l){
+T_jungle ajoutLianeAJungle(T_jungle j, T_liane l){
     T_jungle newj = (T_jungle)malloc(sizeof(struct T_jungle_cell));
-    newj->courante = l;
+    newj->courante = (T_liane *)malloc(sizeof(T_liane));
+    *(newj->courante) = l;
+
     if(jungleVide(j)){
         newj->prec = NULL;
         newj->suiv = NULL;
@@ -116,6 +118,48 @@ void debugJungle(T_jungle j)
     printf("-----\n\n");
 }
 
-void afficheListePref(T_singeV1 s){
+void afficheListePref(T_singe s){
     afficheListeV1(s.listeIntPreferes);
+}
+
+#define LONGUEUR_MIN 4
+#define LONGUEUR_MAX 10
+#define VAL_MIN 0
+#define VAL_MAX 9
+
+T_liane genererLiane()
+{
+    T_liane liane;
+    initLiane(&liane);
+    int longueur_liane, valeur;
+
+    longueur_liane = (rand() % (LONGUEUR_MAX-LONGUEUR_MIN-1) + LONGUEUR_MIN);
+
+    for (int i=0; i<longueur_liane; i++)
+    {
+        valeur = (rand() % (VAL_MAX-VAL_MIN-1) + VAL_MIN);
+        liane = ajoutNombreALiane(liane,valeur);
+    }
+
+    return liane;
+}
+
+#define NOMBRE_MAX_LIANES 10
+#define NOMBRE_MIN_LIANES 5
+
+T_jungle genererJungle()
+{
+    T_jungle jungle;
+    initJungle(&jungle);
+    T_liane liane;
+    int nombre_lianes;
+
+    nombre_lianes = (rand() % (NOMBRE_MAX_LIANES-NOMBRE_MIN_LIANES-1) + NOMBRE_MIN_LIANES);
+
+    for (int i=0; i<nombre_lianes; i++)
+    {
+        liane = genererLiane();
+        jungle = ajoutLianeAJungle(jungle,liane);
+    }
+    return jungle;
 }

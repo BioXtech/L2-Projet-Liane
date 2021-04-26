@@ -4,10 +4,10 @@
 #include "jungle.h"
 #include "types.h"
 
-void afficheLiane(T_liane l, T_singeV1 s, int posX);
-void afficheJungle(T_jungle j, T_singeV1 s);
+void afficheLiane(T_liane l, T_singe s, int posX);
+void afficheJungle(T_jungle j, T_singe s);
 
-T_singeV1 initSinge();
+T_singe initSinge();
 
 
 #endif // INTERFACE_H_INCLUDED

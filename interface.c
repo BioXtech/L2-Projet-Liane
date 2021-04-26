@@ -5,7 +5,7 @@
 #include "interface.h"
 #include "liste.h"
 
-void afficheLiane(T_liane l, T_singeV1 s, int posX)
+void afficheLiane(T_liane l, T_singe s, int posX)
 {
     T_liane ptrCourant = l; // T_liane = struct T_cell*
     int posY = 0;
@@ -23,7 +23,7 @@ void afficheLiane(T_liane l, T_singeV1 s, int posX)
     printf("\n");
 }
 
-void afficheJungle(T_jungle j, T_singeV1 s)
+void afficheJungle(T_jungle j, T_singe s)
 {
     T_jungle ptrCourant = j; // T_jungle = struct T_jungle_cell*
     int posX = 0;
@@ -37,8 +37,8 @@ void afficheJungle(T_jungle j, T_singeV1 s)
     printf("\n############################\n");
 }
 
-T_singeV1 initSinge(){
-    T_singeV1 singe;
+T_singe initSinge(){
+    T_singe singe;
     printf("\n########## INITIALISATION DU SINGE ##########");
     int id;
     printf("\nSaisissez l'ID du singe (numero entre 1 et 50 : ");

@@ -18,11 +18,14 @@ T_liane* getLiane(T_jungle j);
 int getNombreLiane(T_jungle j);
 
 T_liane ajoutNombreALiane(T_liane l, int nombre);
-T_jungle ajoutLianeAJungle(T_jungle j, T_liane *l);
+T_jungle ajoutLianeAJungle(T_jungle j, T_liane l);
 
 void debugJungle(T_jungle j);
 
-void afficheListePref(T_singeV1 s);
+void afficheListePref(T_singe s);
+
+T_liane genererLiane();
+T_jungle genererJungle();
 
 
 #endif // JUNGLE_H_INCLUDED

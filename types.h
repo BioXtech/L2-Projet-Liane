@@ -24,4 +24,6 @@ typedef struct
                                     //points d'accroches possibles pour ce singe
 } T_singeV1;
 
+typedef T_singeV1 T_singe;
+
 #endif // TYPES_H_INCLUDED
