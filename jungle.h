@@ -42,4 +42,6 @@ void afficheListePref(T_singe s);
 T_liane genererLiane();
 T_jungle genererJungle();
 
+void triLiane(T_jungle jungle ,T_singe singe);
+
 #endif // JUNGLE_H_INCLUDED

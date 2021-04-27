@@ -296,3 +296,8 @@ bool verifFin(T_jungle jungle, T_singe singe)
     int nombreLianes = getNombreLiane(jungle);
     return (singe.posX == nombreLianes - 1);
 }
+
+void triLiane(T_jungle jungle){
+    T_liane liane = getLiane(getNextLiane(jungle));
+    tri_selection_liste(liane);
+}

@@ -484,4 +484,19 @@ int getOccurences(T_liste l, int data)
     return occurence;
 }
 
-//A vous la suite
+void tri_selection_liste(T_liste l)
+{
+    T_liste current, j, min;
+    for(current = l; getptrNextCell(current) != NULL; current = getptrNextCell(current))
+    {
+        min = current;
+        for(j = current; j != NULL; j = getptrNextCell(j))
+        {
+            if(*(getPtrData(j))< *(getPtrData(min)))
+            {
+                min = j;
+            }
+        }
+        swapPtrData(current,min);
+    }
+}
