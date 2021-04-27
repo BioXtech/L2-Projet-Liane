@@ -17,15 +17,9 @@ int main()
 {
     srand (time (NULL));
 
+    //choixTypeJeu();
 
     jouer();
-    /*
-    T_singe singe = choixSinge();
-    T_jungle jungle = creationJungle();
-    afficheJungle(jungle, singe);
-    jungle = getNextLiane(jungle);
-    afficheJungle(jungle, singe);
-    */
-    //afficheListePref(singe);
+
     return 0;
 }
