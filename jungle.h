@@ -15,7 +15,7 @@ T_jungle getNextLiane(T_jungle jungle);
 T_jungle getPrecLiane(T_jungle jungle);
 
 T_liane *getLiane(T_jungle jungle);
-T_liane getLianeEnN(T_jungle jungle, int n);
+T_jungle getLianeEnN(T_jungle jungle, int n);
 
 int getNombreLiane(T_jungle jungle);
 
@@ -29,11 +29,13 @@ void afficheListePref(T_singeV1 singe);
 bool verifHaut(T_jungle jungle, T_singe singe);
 bool verifFace(T_jungle jungle, T_singe singe);
 bool verifBas(T_jungle jungle, T_singe singe);
-bool verifGaucheDroite(T_jungle jungle, T_singe singe);
+bool verifDebut(T_jungle jungle, T_singe singe, int * indice);
+bool verifFin(T_jungle jungle, T_singe singe);
 
-void allerEnHaut(T_singe *singe);
-void allerEnFace(T_singe *singe);
-void allerEnBas(T_singe *singe);
+void allerEnHaut(T_jungle jungle, T_singe *singe);
+void allerEnFace(T_jungle jungle, T_singe *singe);
+void allerEnBas(T_jungle jungle, T_singe *singe);
+void allerPremiereLiane(T_jungle jungle, T_singe *singe);
 
 void afficheListePref(T_singe s);
 

@@ -194,12 +194,12 @@ bool verifHaut(T_jungle jungle, T_singe singe)
     {
         return false;
     }
-    int nombreCible = *(getPtrData(getCellEnN(liane_suivante, singe.posY-1));
-                        if (getOccurences(singe.listeIntPreferes,nombreCible) >= 1)
-{
-    return true;
-}
-return false;
+    int nombreCible = *(getPtrData(getCellEnN(liane_suivante, singe.posY-1)));
+    if (getOccurences(singe.listeIntPreferes,nombreCible) >= 1)
+    {
+        return true;
+    }
+    return false;
 }
 
 bool verifBas(T_jungle jungle, T_singe singe)
@@ -207,9 +207,9 @@ bool verifBas(T_jungle jungle, T_singe singe)
     T_liane lianeCourante = *(getLiane(jungle)),
             lianeSuivante = *(getLiane(getNextLiane(jungle)));
 
-    if (getNbreCell(lianeSuiv) >= getNbreCell(lianeCourante) + 2)
+    if (getNbreCell(lianeSuivante) >= getNbreCell(lianeCourante) + 2)
     {
-        int *nombreCible = getPtrData(getptrCellEnN(lianeSuivante, singe.posY + 2));
+        int *nombreCible = getPtrData(getCellEnN(lianeSuivante, singe.posY + 2));
         if (getOccurences(singe.listeIntPreferes, *nombreCible) > 0)
         {
             return true;
@@ -217,3 +217,76 @@ bool verifBas(T_jungle jungle, T_singe singe)
     }
     return false;
 }
+
+bool verifFace(T_jungle jungle, T_singe singe)
+{
+    T_liane lianeCourante = *(getLiane(jungle)),
+            lianeSuivante = *(getLiane(getNextLiane(jungle)));
+
+    if (getNbreCell(lianeSuivante) >= getNbreCell(lianeCourante))
+    {
+        int *nombreCible = getPtrData(getCellEnN(lianeSuivante, singe.posY));
+        if (getOccurences(singe.listeIntPreferes, *nombreCible) > 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool verifDebut(T_jungle jungle, T_singe singe, int * indice) //Simplifier avec utilisaton de FindCell###
+{
+    T_liane premiere_liane = *(getLiane(jungle));
+    int *nombreTest = getPtrData(premiere_liane);
+
+    if (singe.posX == 0)
+    {
+        while (getOccurences(singe.listeIntPreferes, *nombreTest) <= 0)
+        {
+            premiere_liane = getptrNextCell(premiere_liane);
+            nombreTest = getPtrData(premiere_liane);
+            indice++;
+        }
+        if (*nombreTest >= 0 && *nombreTest <= 9)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
+}
+
+void allerEnHaut(T_jungle jungle, T_singe *singe)
+{
+    if (verifHaut(jungle, *singe))
+    {
+        singe->posX++;
+        singe->posY--;
+    }
+}
+
+void allerEnBas(T_jungle jungle, T_singe *singe)
+{
+    if (verifBas(jungle, *singe))
+    {
+        singe->posX++;
+        singe->posY+= 2;
+    }
+}
+
+void allerPremiereLiane(T_jungle jungle, T_singe *singe)
+{
+    int indice = 0;
+    if (verifDebut(jungle, *singe, &indice))
+    {
+        singe->posX++;
+        singe->posY = indice;
+    }
+    else{
+        printf("\nPLOUF !\n");
+    }
+}
+
