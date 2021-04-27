@@ -32,9 +32,9 @@ bool verifBas(T_jungle jungle, T_singe singe);
 bool verifDebut(T_jungle jungle, T_singe singe, int *indice);
 bool verifFin(T_jungle jungle, T_singe singe);
 
-void allerEnHaut(T_jungle jungle, T_singe *singe);
-void allerEnFace(T_jungle jungle, T_singe *singe);
-void allerEnBas(T_jungle jungle, T_singe *singe);
+bool allerEnHaut(T_jungle jungle, T_singe *singe);
+bool allerEnFace(T_jungle jungle, T_singe *singe);
+bool allerEnBas(T_jungle jungle, T_singe *singe);
 void allerPremiereLiane(T_jungle jungle, T_singe *singe);
 
 void afficheListePref(T_singe s);
@@ -42,6 +42,8 @@ void afficheListePref(T_singe s);
 T_liane genererLiane();
 T_jungle genererJungle();
 
-void triLiane(T_jungle jungle ,T_singe singe);
+void sauterEau();
+
+void triLiane(T_jungle jungle);
 
 #endif // JUNGLE_H_INCLUDED

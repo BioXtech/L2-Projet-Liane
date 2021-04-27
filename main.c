@@ -16,12 +16,16 @@ Version 1
 int main()
 {
     srand (time (NULL));
-    T_jungle jungle;
-    T_singe singe = initSinge();
-    jungle = genererJungle();
 
-    afficheJungle(jungle,singe);
 
+    jouer();
+    /*
+    T_singe singe = choixSinge();
+    T_jungle jungle = creationJungle();
+    afficheJungle(jungle, singe);
+    jungle = getNextLiane(jungle);
+    afficheJungle(jungle, singe);
+    */
     //afficheListePref(singe);
     return 0;
 }

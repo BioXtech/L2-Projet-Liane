@@ -4,6 +4,7 @@
 #include "jungle.h"
 #include "types.h"
 
+void clearConsole();
 void afficheLiane(T_liane l, T_singe s, int posX);
 void afficheJungle(T_jungle j, T_singe s);
 
@@ -11,7 +12,10 @@ T_singe initSinge();
 
 T_singe choixSinge();
 T_jungle creationJungle();
-void choixDirection(T_jungle jungle, T_singe singe);
+bool choixDirection(T_jungle jungle, T_singe* singe);
 
+
+void jouer();
+//void jouerAuto();
 
 #endif // INTERFACE_H_INCLUDED

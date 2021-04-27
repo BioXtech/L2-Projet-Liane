@@ -44,6 +44,6 @@ T_liste addBehind(T_liste debut, T_liste suite);
 T_liste findCell(T_liste l, int data);
 int getOccurences(T_liste l, int data);
 
-void tri_selection_liste(T_liste l)
+void tri_selection_liste(T_liste l);
 
 #endif // LISTE_H_INCLUDED

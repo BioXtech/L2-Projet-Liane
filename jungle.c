@@ -190,7 +190,7 @@ T_jungle genererJungle()
 bool verifHaut(T_jungle jungle, T_singe singe)
 {
     T_liane liane_suivante = *(getLiane(getNextLiane(jungle)));
-    if (singe.posY == 0)
+    if (singe.posY == 0 || getNbreCell(liane_suivante)-1 < singe.posY-1)
     {
         return false;
     }
@@ -202,31 +202,14 @@ bool verifHaut(T_jungle jungle, T_singe singe)
     return false;
 }
 
-bool verifBas(T_jungle jungle, T_singe singe)
-{
-    T_liane lianeCourante = *(getLiane(jungle)),
-            lianeSuivante = *(getLiane(getNextLiane(jungle)));
-
-    if (getNbreCell(lianeSuivante) >= getNbreCell(lianeCourante) + 2)
-    {
-        int *nombreCible = getPtrData(getCellEnN(lianeSuivante, singe.posY + 2));
-        if (getOccurences(singe.listeIntPreferes, *nombreCible) > 0)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 bool verifFace(T_jungle jungle, T_singe singe)
 {
-    T_liane lianeCourante = *(getLiane(jungle)),
-            lianeSuivante = *(getLiane(getNextLiane(jungle)));
+    T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
 
-    if (getNbreCell(lianeSuivante) >= getNbreCell(lianeCourante))
+    if (getNbreCell(lianeSuivante)-1 >= singe.posY)
     {
-        int *nombreCible = getPtrData(getCellEnN(lianeSuivante, singe.posY));
-        if (getOccurences(singe.listeIntPreferes, *nombreCible) > 0)
+        int nombreCible = *(getPtrData(getCellEnN(lianeSuivante, singe.posY)));
+        if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
         }
@@ -234,27 +217,39 @@ bool verifFace(T_jungle jungle, T_singe singe)
     return false;
 }
 
-bool verifDebut(T_jungle jungle, T_singe singe, int *indice) //Simplifier avec utilisaton de FindCell###
+bool verifBas(T_jungle jungle, T_singe singe)
+{
+    T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
+
+    if (getNbreCell(lianeSuivante)-1 >= singe.posY + 2)
+    {
+        int nombreCible = *(getPtrData(getCellEnN(lianeSuivante, singe.posY + 2)));
+        if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool verifDebut(T_jungle jungle, T_singe singe, int *indice)
 {
     T_liane premiere_liane = *(getLiane(jungle));
-    int *nombreTest = getPtrData(premiere_liane);
+    int nombreCible;
 
-    if (singe.posX == 0)
+    while (!listeVide(premiere_liane))
     {
-        while (getOccurences(singe.listeIntPreferes, *nombreTest) <= 0)
-        {
-            premiere_liane = getptrNextCell(premiere_liane);
-            nombreTest = getPtrData(premiere_liane);
-            indice++;
-        }
-        if (*nombreTest >= 0 && *nombreTest <= 9)
+        nombreCible = *(getPtrData(premiere_liane));
+        if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
         }
         else
         {
-            return false;
+            premiere_liane = getptrNextCell(premiere_liane);
+            *indice += 1;
         }
+
     }
     return false;
 }
@@ -265,22 +260,36 @@ bool verifFin(T_jungle jungle, T_singe singe)
     return (singe.posX == nombreLianes - 1);
 }
 
-void allerEnHaut(T_jungle jungle, T_singe *singe)
+bool allerEnHaut(T_jungle jungle, T_singe *singe)
 {
     if (verifHaut(jungle, *singe))
     {
         singe->posX++;
         singe->posY--;
+        return true;
     }
+    return false;
 }
 
-void allerEnBas(T_jungle jungle, T_singe *singe)
+bool allerEnFace(T_jungle jungle, T_singe *singe)
+{
+    if (verifFace(jungle, *singe))
+    {
+        singe->posX++;
+        return true;
+    }
+    return false;
+}
+
+bool allerEnBas(T_jungle jungle, T_singe *singe)
 {
     if (verifBas(jungle, *singe))
     {
         singe->posX++;
         singe->posY += 2;
+        return true;
     }
+    return false;
 }
 
 void allerPremiereLiane(T_jungle jungle, T_singe *singe)
@@ -299,11 +308,12 @@ void allerPremiereLiane(T_jungle jungle, T_singe *singe)
 
 void sauterEau()
 {
-        printf("\nPLOUF !\n");
-        exit(0);
+    printf("\nPLOUF !\n");
+    exit(EXIT_SUCCESS);
 }
 
-void triLiane(T_jungle jungle){
-    T_liane liane = getLiane(getNextLiane(jungle));
+void triLiane(T_jungle jungle)
+{
+    T_liane liane = *(getLiane(getNextLiane(jungle)));
     tri_selection_liste(liane);
 }

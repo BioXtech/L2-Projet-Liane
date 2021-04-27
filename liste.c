@@ -310,7 +310,7 @@ T_liste getptrPrevCell(T_liste l)
 T_liste getCellEnN(T_liste liste, int n)
 {
     T_liste ptrCourant = liste;
-    for(int i = 0; i <= n; i++)
+    for(int i = 0; i < n; i++)
     {
         ptrCourant = getptrNextCell(ptrCourant);
     }
@@ -362,7 +362,7 @@ int getNbreCell(T_liste l)
             ptrCourant = ptrCourant->suiv;
             nombre = nombre + 1;
         }
-        printf("\n Le nombre de cellules est : %d\n", nombre);
+        //printf("\n Le nombre de cellules est : %d\n", nombre);
         return nombre;
     }
 }
@@ -466,7 +466,7 @@ int getOccurences(T_liste l, int data)
 
     if (listeVide(l))
     {
-        printf("\nListe vide, l'element n'apparait aucune fois");
+        //printf("\nListe vide, l'element n'apparait aucune fois");
         return 0;
     }
     else
@@ -480,7 +480,7 @@ int getOccurences(T_liste l, int data)
             ptrCourant = ptrCourant->suiv;
         }
     }
-    printf("\nLe nombre d'occurence de %d est %d", data, occurence);
+    //printf("\nLe nombre d'occurence de %d est %d", data, occurence);
     return occurence;
 }
 

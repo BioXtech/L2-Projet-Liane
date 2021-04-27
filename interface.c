@@ -6,6 +6,14 @@
 #include "interface.h"
 #include "liste.h"
 
+void clearConsole()
+{
+    for(int i = 0; i < 50; i++)
+    {
+        printf("\n");
+    }
+}
+
 void afficheLiane(T_liane l, T_singe s, int posX)
 {
     T_liane ptrCourant = l; // T_liane = struct T_cell*
@@ -30,6 +38,10 @@ void afficheJungle(T_jungle j, T_singe s)
 {
     T_jungle ptrCourant = j; // T_jungle = struct T_jungle_cell*
     int posX = 0;
+    while(getPrecLiane(ptrCourant) != NULL)
+    {
+        ptrCourant = getPrecLiane(ptrCourant);
+    }
     printf("\n########## JUNGLE ##########\n\n");
     while(!jungleVide(ptrCourant))
     {
@@ -54,8 +66,8 @@ T_singe initSinge()
     scanf("%s", nom);
     strcpy(singe.nom,nom);
 
-    singe.posX = 1;
-    singe.posY = 1;
+    singe.posX = -1;
+    singe.posY = -1;
 
     T_liste liste_pref;
     initListe(&liste_pref);
@@ -90,31 +102,31 @@ T_singe choixSinge()
 T_jungle creationJungle()
 {
     printf("\nCreation de la jungle en cours");
-    sleep(1);
+    sleep(0.5);
     printf(".");
-    sleep(1);
+    sleep(0.5);
     T_jungle jungle = genererJungle();
     printf(".");
-    sleep(1);
+    sleep(0.5);
     printf(".");
     printf("\nJungle creee !!!");
     return jungle;
 }
 
-void choixDirection(T_jungle jungle, T_singe singe)
+bool choixDirection(T_jungle jungle, T_singe* singe)
 {
     int numero_menu;
 
     do
     {
         printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
-        afficheJungle(jungle, singe);
+        afficheJungle(jungle, *singe);
 
         printf("\nChoisissez parmi les propositions suivantes le traitement a effectuer (taper le numero)\n");
         printf("\n-----------------------------------------------------------\n");
-        if (verifHaut(jungle,singe)) printf("1/ Aller en haut\n");
-        if (verifFace(jungle,singe)) printf("2/ Aller en face\n");
-        if (verifBas(jungle,singe)) printf("3/ Aller en bas\n");
+        if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
+        if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
+        if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
         printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
         printf("5/ Sauter a l'eau\n");
         printf("-----------------------------------------------------------\n");
@@ -124,33 +136,51 @@ void choixDirection(T_jungle jungle, T_singe singe)
 
         switch(numero_menu)
         {
-        case 1 :
-            printf("\nVous avez choisi d'aller en haut\n");
-            allerEnHaut(jungle, &singe);
-            break;
-        case 2 :
-            printf("\nVous avez choisi d'aller en face\n");
-            allerEnFace(jungle, &singe);
-            break;
-        case 3 :
-            printf("\nVous avez choisi d'aller en bas\n");
-            allerEnBas(jungle, &singe);
-            break;
-        case 4 :
-            printf("\nVous avez invoque le dieu DONKEY-KONG !!!\n");
-            triLiane(jungle,singe);
-            break;
-        case 5 :
-            printf("\nVous avez choisi de sauter a l'eau\n");
-            int intensite = choix_intensite_pixellisation();
-            ptr_image = PixellisationImage(ptr_image, intensite);
-            break;
-        default :
-            printf("\nVotre choix n'est pas valide, saisissez un numero entre 1 et 5\n");
-            break;
+            case 1 :
+                printf("\nVous avez choisi d'aller en haut\n");
+                return allerEnHaut(jungle, singe);
+            case 2 :
+                printf("\nVous avez choisi d'aller en face\n");
+                return allerEnFace(jungle, singe);
+            case 3 :
+                printf("\nVous avez choisi d'aller en bas\n");
+                return allerEnBas(jungle, singe);
+            case 4 :
+                printf("\nVous avez invoque le dieu DONKEY-KONG !!!\n");
+                triLiane(jungle);
+                return false;
+            case 5 :
+                printf("\nVous avez choisi de sauter a l'eau\n");
+                sauterEau();
+                break;
+            default :
+                printf("\nVotre choix n'est pas valide, saisissez un numero entre 1 et 5\n");
+                break;
         }
-
     }
-    while(numero_menu >= 1 && numero_menu <= 5);
+    while(numero_menu < 1 && numero_menu > 5);
+}
+
+void jouer()
+{
+    T_singe singe = choixSinge();
+    T_jungle jungle = creationJungle();
+    afficheJungle(jungle, singe);
+    allerPremiereLiane(jungle, &singe);
+
+    T_jungle jungleCourante = jungle;
+    bool doitAvancer = false;
+
+    do
+    {
+        doitAvancer = choixDirection(jungleCourante, &singe);
+        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
+        clearConsole();
+    }
+    while(!verifFin(jungle, singe));
+
+    printf("Vous avez gagne !\n");
+    printf("Le singe a reussi a traverser la riviere !\n");
+
 }
 
