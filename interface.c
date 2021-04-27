@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "interface.h"
 #include "liste.h"
@@ -75,3 +76,81 @@ T_singe initSinge()
 
     return singe;
 }
+
+T_singe choixSinge()
+{
+    printf("\n########## JEU DU SINGE ##########");
+    printf("\nVous allez pouvoir saisir l'ID, le nom, ainsi que la liste d'entiers preferes de votre singe\n");
+
+    T_singe singe = initSinge();
+    printf("\nSinge cree !!!");
+    return singe;
+}
+
+T_jungle creationJungle()
+{
+    printf("\nCreation de la jungle en cours");
+    sleep(1);
+    printf(".");
+    sleep(1);
+    T_jungle jungle = genererJungle();
+    printf(".");
+    sleep(1);
+    printf(".");
+    printf("\nJungle creee !!!");
+    return jungle;
+}
+
+void choixDirection(T_jungle jungle, T_singe singe)
+{
+    int numero_menu;
+
+    do
+    {
+        printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
+        afficheJungle(jungle, singe);
+
+        printf("\nChoisissez parmi les propositions suivantes le traitement a effectuer (taper le numero)\n");
+        printf("\n-----------------------------------------------------------\n");
+        if (verifHaut(jungle,singe)) printf("1/ Aller en haut\n");
+        if (verifFace(jungle,singe)) printf("2/ Aller en face\n");
+        if (verifBas(jungle,singe)) printf("3/ Aller en bas\n");
+        printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
+        printf("5/ Sauter a l'eau\n");
+        printf("-----------------------------------------------------------\n");
+
+        printf("\nChoisissez un numero parmi les possibilites : \n");
+        scanf("%d", &numero_menu);
+
+        switch(numero_menu)
+        {
+        case 1 :
+            printf("\nVous avez choisi d'aller en haut\n");
+            allerEnHaut(jungle, &singe);
+            break;
+        case 2 :
+            printf("\nVous avez choisi d'aller en face\n");
+            allerEnFace(jungle, &singe);
+            break;
+        case 3 :
+            printf("\nVous avez choisi d'aller en bas\n");
+            allerEnBas(jungle, &singe);
+            break;
+        case 4 :
+            printf("\nVous avez invoque le dieu DONKEY-KONG !!!\n");
+            triLiane(jungle,singe);
+            break;
+        case 5 :
+            printf("\nVous avez choisi de sauter a l'eau\n");
+            int intensite = choix_intensite_pixellisation();
+            ptr_image = PixellisationImage(ptr_image, intensite);
+            break;
+        default :
+            printf("\nVotre choix n'est pas valide, saisissez un numero entre 1 et 5\n");
+            break;
+        }
+
+    }
+    while(numero_menu >= 1 && numero_menu <= 5);
+}
+

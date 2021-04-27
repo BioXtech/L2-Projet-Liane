@@ -9,5 +9,9 @@ void afficheJungle(T_jungle j, T_singe s);
 
 T_singe initSinge();
 
+T_singe choixSinge();
+T_jungle creationJungle();
+void choixDirection(T_jungle jungle, T_singe singe);
+
 
 #endif // INTERFACE_H_INCLUDED

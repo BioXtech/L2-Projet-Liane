@@ -259,6 +259,12 @@ bool verifDebut(T_jungle jungle, T_singe singe, int *indice) //Simplifier avec u
     return false;
 }
 
+bool verifFin(T_jungle jungle, T_singe singe)
+{
+    int nombreLianes = getNombreLiane(jungle);
+    return (singe.posX == nombreLianes - 1);
+}
+
 void allerEnHaut(T_jungle jungle, T_singe *singe)
 {
     if (verifHaut(jungle, *singe))
@@ -282,19 +288,19 @@ void allerPremiereLiane(T_jungle jungle, T_singe *singe)
     int indice = 0;
     if (verifDebut(jungle, *singe, &indice))
     {
-        singe->posX++;
+        singe->posX = 0;
         singe->posY = indice;
     }
     else
     {
-        printf("\nPLOUF !\n");
+        sauterEau();
     }
 }
 
-bool verifFin(T_jungle jungle, T_singe singe)
+void sauterEau()
 {
-    int nombreLianes = getNombreLiane(jungle);
-    return (singe.posX == nombreLianes - 1);
+        printf("\nPLOUF !\n");
+        exit(0);
 }
 
 void triLiane(T_jungle jungle){
