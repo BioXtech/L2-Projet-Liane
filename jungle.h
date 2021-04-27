@@ -29,7 +29,7 @@ void afficheListePref(T_singeV1 singe);
 bool verifHaut(T_jungle jungle, T_singe singe);
 bool verifFace(T_jungle jungle, T_singe singe);
 bool verifBas(T_jungle jungle, T_singe singe);
-bool verifDebut(T_jungle jungle, T_singe singe, int * indice);
+bool verifDebut(T_jungle jungle, T_singe singe, int *indice);
 bool verifFin(T_jungle jungle, T_singe singe);
 
 void allerEnHaut(T_jungle jungle, T_singe *singe);

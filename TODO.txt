@@ -3,3 +3,7 @@ TODO LIST
 InitSinge: verifier s'il n'y a pas un ajout en double dans la liste
 
 afficheJungle: print les lianes dans l'autre sens en mettant la premier liane en bas.
+
+Lianes: ajout en tete et pas en fin pour ameliorer la complexité en temps
+
+Simplifier verifDebut
