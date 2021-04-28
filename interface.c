@@ -282,6 +282,7 @@ void choixTypeJeu()
     printf("2/ Mode Automatique\n");
     printf("-----------------------------------------------------------\n");
 
+    do{
     printf("\nChoisissez un numero parmi les deux possibilites : \n");
     scanf("%d", &numero_menu);
 
@@ -296,8 +297,9 @@ void choixTypeJeu()
             jouerAuto();
             break;
         default :
-            printf("\nNumero non compris entre 1 et 5\n");
+            printf("\nNumero non compris entre 1 et 2\n");
             break;
-        }
+    }
+    }while(numero_menu != 1 && numero_menu != 2);
 }
 
