@@ -159,6 +159,7 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
         }
     }
     while(numero_menu < 1 && numero_menu > 5);
+    return false;
 }
 
 bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
@@ -180,40 +181,20 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
         printf("-----------------------------------------------------------\n");
 
         printf("\nChoix parmi les possibilites : \n");
-        sleep(0.5);
+        sleep(1);
         printf(".");
-        sleep(0.5);
+        sleep(1);
         printf(".");
-        sleep(0.5);
+        sleep(1);
         printf(".");
         numero_menu = 5;
 
-        if (verifHaut(jungle,*singe))
-        {
-            numero_menu = 1;
-            //printf("\nLe singe est alle en haut\n");
-            //return allerEnHaut(jungle, singe);
-        }
-        else if (verifFace(jungle,*singe))
-        {
-            numero_menu = 2;
-            //printf("\nLe singe est alle en face\n");
-            //return allerEnFace(jungle, singe);
-        }
-        else if (verifBas(jungle,*singe))
-        {
-            numero_menu = 3;
-            //printf("\nLe singe est alle en bas\n");
-            //return allerEnBas(jungle, singe);
-        }
-        else if (!verifTriLiane(jungle))
-        {
-            numero_menu = 4;
-        }
-        else
-        {
-            numero_menu = 5;
-        }
+        if (verifHaut(jungle,*singe)) numero_menu = 1;
+        else if (verifFace(jungle,*singe)) numero_menu = 2;
+        else if (verifBas(jungle,*singe)) numero_menu = 3;
+        else if (!verifTriLiane(jungle)) numero_menu = 4;
+        else numero_menu = 5;
+
 
         switch(numero_menu)
         {
@@ -240,6 +221,7 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
         }
     }
     while(numero_menu < 1 && numero_menu > 5);
+    return false;
 }
 
 void jouer()
@@ -286,5 +268,36 @@ void jouerAuto()
     printf("Vous avez gagne !\n");
     printf("Le singe a reussi a traverser la riviere !\n");
 
+}
+
+void choixTypeJeu()
+{
+    int numero_menu;
+
+    printf("\n########## JEU DU SINGE ##########");
+
+    printf("\nSouhaitez vous jouer vous-meme ou lancer le mode automatique ? (taper le numero)\n");
+    printf("\n-----------------------------------------------------------\n");
+    printf("1/ Mode Manuel\n");
+    printf("2/ Mode Automatique\n");
+    printf("-----------------------------------------------------------\n");
+
+    printf("\nChoisissez un numero parmi les deux possibilites : \n");
+    scanf("%d", &numero_menu);
+
+    switch(numero_menu)
+    {
+        case 1 :
+            printf("\nVous avez choisi le mode manuel\n");
+            jouer();
+            break;
+        case 2 :
+            printf("\nVous avez choisi le mode automatique\n");
+            jouerAuto();
+            break;
+        default :
+            printf("\nNumero non compris entre 1 et 5\n");
+            break;
+        }
 }
 

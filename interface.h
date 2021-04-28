@@ -17,6 +17,6 @@ bool choixDirection(T_jungle jungle, T_singe* singe);
 
 void jouer();
 void jouerAuto();
-bool choixTypeJeu();
+void choixTypeJeu();
 
 #endif // INTERFACE_H_INCLUDED
