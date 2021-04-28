@@ -161,6 +161,87 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
     while(numero_menu < 1 && numero_menu > 5);
 }
 
+bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
+{
+    int numero_menu;
+
+    do
+    {
+        printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
+        afficheJungle(jungle, *singe);
+
+        printf("\nLes possibilites sont les suivantes\n");
+        printf("\n-----------------------------------------------------------\n");
+        if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
+        if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
+        if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
+        printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
+        printf("5/ Sauter a l'eau\n");
+        printf("-----------------------------------------------------------\n");
+
+        printf("\nChoix parmi les possibilites : \n");
+        sleep(0.5);
+        printf(".");
+        sleep(0.5);
+        printf(".");
+        sleep(0.5);
+        printf(".");
+        numero_menu = 5;
+
+        if (verifHaut(jungle,*singe))
+        {
+            numero_menu = 1;
+            //printf("\nLe singe est alle en haut\n");
+            //return allerEnHaut(jungle, singe);
+        }
+        else if (verifFace(jungle,*singe))
+        {
+            numero_menu = 2;
+            //printf("\nLe singe est alle en face\n");
+            //return allerEnFace(jungle, singe);
+        }
+        else if (verifBas(jungle,*singe))
+        {
+            numero_menu = 3;
+            //printf("\nLe singe est alle en bas\n");
+            //return allerEnBas(jungle, singe);
+        }
+        else if (!verifTriLiane(jungle))
+        {
+            numero_menu = 4;
+        }
+        else
+        {
+            numero_menu = 5;
+        }
+
+        switch(numero_menu)
+        {
+            case 1 :
+                printf("\nLe singe est alle en haut\n");
+                return allerEnHaut(jungle, singe);
+            case 2 :
+                printf("\nLe singe est alle en face\n");
+                return allerEnFace(jungle, singe);
+            case 3 :
+                printf("\nLe singe est alle en bas\n");
+                return allerEnBas(jungle, singe);
+            case 4 :
+                printf("\nInvocation du dieu DONKEY-KONG !!!\n");
+                triLiane(jungle);
+                return false;
+            case 5 :
+                printf("\nLe singe a saute a l'eau\n");
+                sauterEau();
+                break;
+            default :
+                printf("\nNumero non compris entre 1 et 5\n");
+                break;
+        }
+    }
+    while(numero_menu < 1 && numero_menu > 5);
+}
+
 void jouer()
 {
     T_singe singe = choixSinge();
@@ -174,6 +255,29 @@ void jouer()
     do
     {
         doitAvancer = choixDirection(jungleCourante, &singe);
+        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
+        clearConsole();
+    }
+    while(!verifFin(jungle, singe));
+
+    printf("Vous avez gagne !\n");
+    printf("Le singe a reussi a traverser la riviere !\n");
+
+}
+
+void jouerAuto()
+{
+    T_singe singe = choixSinge();
+    T_jungle jungle = creationJungle();
+    afficheJungle(jungle, singe);
+    allerPremiereLiane(jungle, &singe);
+
+    T_jungle jungleCourante = jungle;
+    bool doitAvancer = false;
+
+    do
+    {
+        doitAvancer = choixDirectionAuto(jungleCourante, &singe);
         if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
         clearConsole();
     }

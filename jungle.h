@@ -46,4 +46,6 @@ void sauterEau();
 
 void triLiane(T_jungle jungle);
 
+bool verifTriLiane(T_jungle jungle);
+
 #endif // JUNGLE_H_INCLUDED

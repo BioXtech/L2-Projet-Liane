@@ -500,3 +500,30 @@ void tri_selection_liste(T_liste l)
         swapPtrData(current,min);
     }
 }
+
+bool verifTriListe(T_liste l)
+{
+    T_liste ptrCourant = l;
+    if (listeVide(l))
+    {
+        //printf("\nLISTE TRIEE");
+        return true;
+    }
+    else
+    {
+        while (getptrNextCell(ptrCourant) != NULL)
+        {
+            if (*(getPtrData(ptrCourant)) <= *(getPtrData(getptrNextCell(ptrCourant))))
+            {
+                ptrCourant = getptrNextCell(ptrCourant);
+            }
+            else
+            {
+                //printf("\nLISTE NON TRIEE");
+                return false;
+            }
+        }
+        //printf("\nLISTE TRIEE");
+        return true;
+    }
+}

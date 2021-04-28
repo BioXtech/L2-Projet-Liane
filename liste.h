@@ -45,5 +45,6 @@ T_liste findCell(T_liste l, int data);
 int getOccurences(T_liste l, int data);
 
 void tri_selection_liste(T_liste l);
+bool verifTriListe(T_liste l);
 
 #endif // LISTE_H_INCLUDED

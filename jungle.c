@@ -317,3 +317,9 @@ void triLiane(T_jungle jungle)
     T_liane liane = *(getLiane(getNextLiane(jungle)));
     tri_selection_liste(liane);
 }
+
+bool verifTriLiane(T_jungle jungle)
+{
+    T_liane liane = *(getLiane(getNextLiane(jungle)));
+    return verifTriListe(liane);
+}
