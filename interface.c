@@ -13,7 +13,9 @@ void clearConsole()
         printf("\n");
     }
 }
-
+// Paramètres :
+// Résultat :
+// Definition :
 void afficheLiane(T_liane l, T_singe s, int posX)
 {
     T_liane ptrCourant = l; // T_liane = struct T_cell*
