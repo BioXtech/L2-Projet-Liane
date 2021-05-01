@@ -282,24 +282,26 @@ void choixTypeJeu()
     printf("2/ Mode Automatique\n");
     printf("-----------------------------------------------------------\n");
 
-    do{
-    printf("\nChoisissez un numero parmi les deux possibilites : \n");
-    scanf("%d", &numero_menu);
-
-    switch(numero_menu)
+    do
     {
-        case 1 :
-            printf("\nVous avez choisi le mode manuel\n");
-            jouer();
-            break;
-        case 2 :
-            printf("\nVous avez choisi le mode automatique\n");
-            jouerAuto();
-            break;
-        default :
-            printf("\nNumero non compris entre 1 et 2\n");
-            break;
+        printf("\nChoisissez un numero parmi les deux possibilites : \n");
+        scanf("%d", &numero_menu);
+
+        switch(numero_menu)
+        {
+            case 1 :
+                printf("\nVous avez choisi le mode manuel\n");
+                jouer();
+                break;
+            case 2 :
+                printf("\nVous avez choisi le mode automatique\n");
+                jouerAuto();
+                break;
+            default :
+                printf("\nNumero non compris entre 1 et 2\n");
+                break;
+        }
     }
-    }while(numero_menu != 1 && numero_menu != 2);
+    while(numero_menu != 1 && numero_menu != 2);
 }
 
