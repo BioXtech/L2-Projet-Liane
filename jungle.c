@@ -5,10 +5,7 @@
 #include "jungle.h"
 #include "liste.h"
 
-void initLiane(T_liane *l)
-{
-    *l = NULL;
-}
+
 
 void initJungle(T_jungle *j)
 {
@@ -91,10 +88,6 @@ int getNombreLiane(T_jungle j)
     }
 }
 
-T_liane ajoutNombreALiane(T_liane l, int nombre)
-{
-    return ajoutEnFin(l, nombre);
-}
 
 T_jungle ajoutLianeAJungle(T_jungle j, T_liane l)
 {
@@ -122,7 +115,7 @@ T_jungle ajoutLianeAJungle(T_jungle j, T_liane l)
 
     return j;
 }
-
+/*
 void debugJungle(T_jungle j)
 {
     T_jungle ptrCourant = j;
@@ -139,34 +132,7 @@ void debugJungle(T_jungle j)
     }
     printf("-----\n\n");
 }
-
-void afficheListePref(T_singe s)
-{
-    afficheListeV1(s.listeIntPreferes);
-}
-
-#define LONGUEUR_MIN 4
-#define LONGUEUR_MAX 10
-#define VAL_MIN 0
-#define VAL_MAX 9
-
-T_liane genererLiane()
-{
-    T_liane liane;
-    initLiane(&liane);
-    int longueur_liane, valeur;
-
-    longueur_liane = (rand() % (LONGUEUR_MAX - LONGUEUR_MIN - 1) + LONGUEUR_MIN);
-
-    for (int i = 0; i < longueur_liane; i++)
-    {
-        valeur = (rand() % (VAL_MAX - VAL_MIN - 1) + VAL_MIN);
-        liane = ajoutNombreALiane(liane, valeur);
-    }
-
-    return liane;
-}
-
+*/
 #define NOMBRE_MAX_LIANES 10
 #define NOMBRE_MIN_LIANES 5
 
@@ -194,7 +160,7 @@ bool verifHaut(T_jungle jungle, T_singe singe)
     {
         return false;
     }
-    int nombreCible = *(getPtrData(getCellEnN(liane_suivante, singe.posY - 1)));
+    int nombreCible = getValPointAccroche(*(getPtrData(getCellEnN(liane_suivante, singe.posY - 1))));
     if (getOccurences(singe.listeIntPreferes, nombreCible) >= 1)
     {
         return true;
@@ -208,7 +174,7 @@ bool verifFace(T_jungle jungle, T_singe singe)
 
     if (getNbreCell(lianeSuivante)-1 >= singe.posY)
     {
-        int nombreCible = *(getPtrData(getCellEnN(lianeSuivante, singe.posY)));
+        int nombreCible = getValPointAccroche(*(getPtrData(getCellEnN(lianeSuivante, singe.posY))));
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
@@ -223,7 +189,7 @@ bool verifBas(T_jungle jungle, T_singe singe)
 
     if (getNbreCell(lianeSuivante)-1 >= singe.posY + 2)
     {
-        int nombreCible = *(getPtrData(getCellEnN(lianeSuivante, singe.posY + 2)));
+        int nombreCible = getValPointAccroche(*(getPtrData(getCellEnN(lianeSuivante, singe.posY + 2))));
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
@@ -239,7 +205,7 @@ bool verifDebut(T_jungle jungle, T_singe singe, int *indice)
 
     while (!listeVide(premiere_liane))
     {
-        nombreCible = *(getPtrData(premiere_liane));
+        nombreCible = getValPointAccroche(*(getPtrData(premiere_liane)));
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;

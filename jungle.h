@@ -3,10 +3,16 @@
 
 #include <stdbool.h>
 
-#include "liste.h"
+#include "liane.h"
 #include "types.h"
 
-void initLiane(T_liane *liane);
+typedef struct T_jungle_cell
+{
+    struct T_jungle_cell* suiv;
+    struct T_jungle_cell* prec;
+    T_liane* courante;
+}* T_jungle;
+
 void initJungle(T_jungle *jungle);
 
 bool jungleVide(T_jungle jungle);
@@ -19,12 +25,9 @@ T_jungle getLianeEnN(T_jungle jungle, int n);
 
 int getNombreLiane(T_jungle jungle);
 
-T_liane ajoutNombreALiane(T_liane liane, int nombre);
 T_jungle ajoutLianeAJungle(T_jungle jungle, T_liane liane);
 
-void debugJungle(T_jungle jungle);
-
-void afficheListePref(T_singeV1 singe);
+//void debugJungle(T_jungle jungle);
 
 bool verifHaut(T_jungle jungle, T_singe singe);
 bool verifFace(T_jungle jungle, T_singe singe);
@@ -39,7 +42,6 @@ void allerPremiereLiane(T_jungle jungle, T_singe *singe);
 
 void afficheListePref(T_singe s);
 
-T_liane genererLiane();
 T_jungle genererJungle();
 
 void sauterEau();

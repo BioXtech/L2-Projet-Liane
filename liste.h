@@ -2,15 +2,7 @@
 #define LISTE_H_INCLUDED
 
 #include <stdbool.h>
-
-typedef struct T_cell
-{
-
-    struct T_cell *suiv;
-    struct T_cell *prec;
-    int *data;
-
-} *T_liste;
+#include "types.h"
 
 void initListe(T_liste *l);
 bool listeVide( T_liste l);
