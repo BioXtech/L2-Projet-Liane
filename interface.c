@@ -176,7 +176,7 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
         if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
         if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
         if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
-        printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
+        if (!verifTriLiane(jungle)) printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
         printf("5/ Sauter a l'eau\n");
         printf("-----------------------------------------------------------\n");
 
