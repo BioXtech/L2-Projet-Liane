@@ -13,7 +13,9 @@ void clearConsole()
         printf("\n");
     }
 }
-
+// Paramètres :
+// Résultat :
+// Definition :
 void afficheLiane(T_liane l, T_singe s, int posX)
 {
     T_liane ptrCourant = l; // T_liane = struct T_cell*
@@ -176,7 +178,7 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
         if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
         if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
         if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
-        printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
+        if (!verifTriLiane(jungle)) printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
         printf("5/ Sauter a l'eau\n");
         printf("-----------------------------------------------------------\n");
 
@@ -282,24 +284,26 @@ void choixTypeJeu()
     printf("2/ Mode Automatique\n");
     printf("-----------------------------------------------------------\n");
 
-    do{
-    printf("\nChoisissez un numero parmi les deux possibilites : \n");
-    scanf("%d", &numero_menu);
-
-    switch(numero_menu)
+    do
     {
-        case 1 :
-            printf("\nVous avez choisi le mode manuel\n");
-            jouer();
-            break;
-        case 2 :
-            printf("\nVous avez choisi le mode automatique\n");
-            jouerAuto();
-            break;
-        default :
-            printf("\nNumero non compris entre 1 et 2\n");
-            break;
+        printf("\nChoisissez un numero parmi les deux possibilites : \n");
+        scanf("%d", &numero_menu);
+
+        switch(numero_menu)
+        {
+            case 1 :
+                printf("\nVous avez choisi le mode manuel\n");
+                jouer();
+                break;
+            case 2 :
+                printf("\nVous avez choisi le mode automatique\n");
+                jouerAuto();
+                break;
+            default :
+                printf("\nNumero non compris entre 1 et 2\n");
+                break;
+        }
     }
-    }while(numero_menu != 1 && numero_menu != 2);
+    while(numero_menu != 1 && numero_menu != 2);
 }
 
