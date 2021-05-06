@@ -156,12 +156,15 @@ T_jungle genererJungle()
 bool verifHaut(T_jungle jungle, T_singe singe)
 {
     T_liane liane_suivante = *(getLiane(getNextLiane(jungle)));
-    if (singe.posY == 0 || getNbreCell(liane_suivante)-1 < singe.posY-1)
+    T_liane liane_courante = *(getLiane(jungle));
+    int hauteurSinge = getHauteurSinge(liane_courante);
+
+    if (verifSingePresent(getptrFirstPA(liane_courante)) || getNbrePA(liane_suivante)-1 < hauteurSinge-1)
     {
         return false;
     }
-    int nombreCible = getValPointAccroche(*(getPtrData(getCellEnN(liane_suivante, singe.posY - 1))));
-    if (getOccurences(singe.listeIntPreferes, nombreCible) >= 1)
+    int nombreCible = getValPointAccroche(*(getPA(getPAEnN(liane_suivante, hauteurSinge-1))));
+    if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
     {
         return true;
     }
@@ -171,10 +174,12 @@ bool verifHaut(T_jungle jungle, T_singe singe)
 bool verifFace(T_jungle jungle, T_singe singe)
 {
     T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
+    T_liane liane_courante = *(getLiane(jungle));
+    int hauteurSinge = getHauteurSinge(liane_courante);
 
-    if (getNbreCell(lianeSuivante)-1 >= singe.posY)
+    if (getNbrePA(lianeSuivante)-1 >= hauteurSinge)
     {
-        int nombreCible = getValPointAccroche(*(getPtrData(getCellEnN(lianeSuivante, singe.posY))));
+        int nombreCible = getValPointAccroche(*(getPA(getPAEnN(liane_suivante, hauteurSinge))));
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
@@ -186,10 +191,12 @@ bool verifFace(T_jungle jungle, T_singe singe)
 bool verifBas(T_jungle jungle, T_singe singe)
 {
     T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
+    T_liane liane_courante = *(getLiane(jungle));
+    int hauteurSinge = getHauteurSinge(liane_courante);
 
-    if (getNbreCell(lianeSuivante)-1 >= singe.posY + 2)
+    if (getNbrePA(lianeSuivante)-1 >= hauteurSinge+2)
     {
-        int nombreCible = getValPointAccroche(*(getPtrData(getCellEnN(lianeSuivante, singe.posY + 2))));
+        int nombreCible = getValPointAccroche(*(getPA(getPAEnN(liane_suivante, hauteurSinge+2))));
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
@@ -203,16 +210,16 @@ bool verifDebut(T_jungle jungle, T_singe singe, int *indice)
     T_liane premiere_liane = *(getLiane(jungle));
     int nombreCible;
 
-    while (!listeVide(premiere_liane))
+    while (!lianeVide(premiere_liane))
     {
-        nombreCible = getValPointAccroche(*(getPtrData(premiere_liane)));
+        nombreCible = getValPointAccroche(*(getPA(premiere_liane)));
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
         }
         else
         {
-            premiere_liane = getptrNextCell(premiere_liane);
+            premiere_liane = getptrNextPA(premiere_liane);
             *indice += 1;
         }
 
@@ -222,16 +229,32 @@ bool verifDebut(T_jungle jungle, T_singe singe, int *indice)
 
 bool verifFin(T_jungle jungle, T_singe singe)
 {
-    int nombreLianes = getNombreLiane(jungle);
-    return (singe.posX == nombreLianes - 1);
+    T_jungle ptrCourant = jungle;
+    while (getNextLiane(jungle) != NULL)
+    {
+        ptrCourant = getNextLiane(jungle);
+    }
+    T_liane derniere_liane = *(getLiane(ptrCourant));
+    T_liane ptr_derniere_liane = derniere_liane;
+    while(derniere_liane != NULL)
+    {
+        if (verifSingePresent(*getPA(ptr_derniere_liane))) return true;
+        ptr_derniere_liane = getptrNextPA(ptr_derniere_liane);
+    }
+    return false;
 }
 
 bool allerEnHaut(T_jungle jungle, T_singe *singe)
 {
     if (verifHaut(jungle, *singe))
     {
-        singe->posX++;
-        singe->posY--;
+        T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
+        T_liane liane_courante = *(getLiane(jungle));
+        int hauteurSinge = getHauteurSinge(liane_courante);
+
+        T_singe *adresse_singe = getPA(getPAEnN(liane_courante, hauteurSinge))->est_present;
+        getPA(getPAEnN(liane_courante, hauteurSinge))->est_present = NULL;
+        getPA(getPAEnN(lianeSuivante, hauteurSinge-1))->est_present = adresse_singe;
         return true;
     }
     return false;
@@ -241,7 +264,13 @@ bool allerEnFace(T_jungle jungle, T_singe *singe)
 {
     if (verifFace(jungle, *singe))
     {
-        singe->posX++;
+        T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
+        T_liane liane_courante = *(getLiane(jungle));
+        int hauteurSinge = getHauteurSinge(liane_courante);
+
+        T_singe *adresse_singe = getPA(getPAEnN(liane_courante, hauteurSinge))->est_present;
+        getPA(getPAEnN(liane_courante, hauteurSinge))->est_present = NULL;
+        getPA(getPAEnN(lianeSuivante, hauteurSinge))->est_present = adresse_singe;
         return true;
     }
     return false;
@@ -251,8 +280,13 @@ bool allerEnBas(T_jungle jungle, T_singe *singe)
 {
     if (verifBas(jungle, *singe))
     {
-        singe->posX++;
-        singe->posY += 2;
+        T_liane lianeSuivante = *(getLiane(getNextLiane(jungle)));
+        T_liane liane_courante = *(getLiane(jungle));
+        int hauteurSinge = getHauteurSinge(liane_courante);
+
+        T_singe *adresse_singe = getPA(getPAEnN(liane_courante, hauteurSinge))->est_present;
+        getPA(getPAEnN(liane_courante, hauteurSinge))->est_present = NULL;
+        getPA(getPAEnN(lianeSuivante, hauteurSinge+2))->est_present = adresse_singe;
         return true;
     }
     return false;
@@ -260,11 +294,13 @@ bool allerEnBas(T_jungle jungle, T_singe *singe)
 
 void allerPremiereLiane(T_jungle jungle, T_singe *singe)
 {
-    int indice = 0;
-    if (verifDebut(jungle, *singe, &indice))
+    int hauteur_singe = 0;
+    if (verifDebut(jungle, *singe, &hauteur_singe))
     {
-        singe->posX = 0;
-        singe->posY = indice;
+        T_liane premiere_liane = *(getLiane(jungle));
+
+        getPA(getPAEnN(premiere_liane, hauteur_singe))->est_present = singe;
+        return true;
     }
     else
     {
@@ -284,8 +320,49 @@ void triLiane(T_jungle jungle)
     tri_selection_liste(liane);
 }
 
+void tri_selection_liane(T_liane l)
+{
+    T_liste current, j, min;
+    for(current = l; getptrNextCell(current) != NULL; current = getptrNextCell(current))
+    {
+        min = current;
+        for(j = current; j != NULL; j = getptrNextCell(j))
+        {
+            if(*(getPtrData(j))< *(getPtrData(min)))
+            {
+                min = j;
+            }
+        }
+        swapPtrData(current,min);
+    }
+}
+
 bool verifTriLiane(T_jungle jungle)
 {
     T_liane liane = *(getLiane(getNextLiane(jungle)));
     return verifTriListe(liane);
+
+    T_liste ptrCourant = l;
+    if (listeVide(l))
+    {
+        //printf("\nLISTE TRIEE");
+        return true;
+    }
+    else
+    {
+        while (getptrNextCell(ptrCourant) != NULL)
+        {
+            if (*(getPtrData(ptrCourant)) <= *(getPtrData(getptrNextCell(ptrCourant))))
+            {
+                ptrCourant = getptrNextCell(ptrCourant);
+            }
+            else
+            {
+                //printf("\nLISTE NON TRIEE");
+                return false;
+            }
+        }
+        //printf("\nLISTE TRIEE");
+        return true;
+    }
 }
