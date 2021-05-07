@@ -5,7 +5,7 @@
 #include "types.h"
 
 void clearConsole();
-void afficheLiane(T_liane l, T_singe s, int posX);
+void afficheLiane(T_liane l, T_singe s);
 void afficheJungle(T_jungle j, T_singe s);
 
 T_singe initSinge();

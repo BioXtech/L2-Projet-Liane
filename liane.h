@@ -15,6 +15,7 @@ typedef struct T_cell_liane
 
 void initLiane(T_liane *liane);
 bool lianeVide(T_liane l);
+void debugLiane(T_liane l);
 T_liane ajoutNombreALiane(T_liane liane, int nombre);
 T_liane genererLiane();
 T_liane getptrNextPA(T_liane l);

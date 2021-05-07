@@ -16,22 +16,20 @@ void clearConsole()
 // Paramètres :
 // Résultat :
 // Definition :
-void afficheLiane(T_liane l, T_singe s, int posX)
+void afficheLiane(T_liane l, T_singe s)
 {
     T_liane ptrCourant = l; // T_liane = struct T_cell*
-    int posY = 0;
     while(!lianeVide(ptrCourant))
     {
-        if(posX == s.posX && posY == s.posY)
+        if(verifSingePresent(*getPA(ptrCourant)))
         {
             printf("-%c-", s.nom[0]);
         }
         else
         {
-            printf("-%d-", *getPtrData(ptrCourant));
+            printf("-%d-", getValPointAccroche(*getPA(ptrCourant)));
         }
-        posY++;
-        ptrCourant = getptrNextCell(ptrCourant);
+        ptrCourant = getptrNextPA(ptrCourant);
     }
     printf("\n");
 }
@@ -39,7 +37,6 @@ void afficheLiane(T_liane l, T_singe s, int posX)
 void afficheJungle(T_jungle j, T_singe s)
 {
     T_jungle ptrCourant = j; // T_jungle = struct T_jungle_cell*
-    int posX = 0;
     while(getPrecLiane(ptrCourant) != NULL)
     {
         ptrCourant = getPrecLiane(ptrCourant);
@@ -47,9 +44,8 @@ void afficheJungle(T_jungle j, T_singe s)
     printf("\n########## JUNGLE ##########\n\n");
     while(!jungleVide(ptrCourant))
     {
-        afficheLiane(*getLiane(ptrCourant), s, posX);
+        afficheLiane(*getLiane(ptrCourant), s);
         ptrCourant = getNextLiane(ptrCourant);
-        posX++;
     }
     printf("\n############################\n");
 }
@@ -59,7 +55,7 @@ T_singe initSinge()
     T_singe singe;
     printf("\n########## INITIALISATION DU SINGE ##########");
     int id;
-    printf("\nSaisissez l'ID du singe (numero entre 1 et 50 : ");
+    printf("\nSaisissez l'ID du singe (numero entre 1 et 50) : ");
     scanf("%d", &id);
     singe.id = id;
 
@@ -67,9 +63,6 @@ T_singe initSinge()
     printf("\nSaisissez le nom a attribuer au singe : ");
     scanf("%s", nom);
     strcpy(singe.nom,nom);
-
-    singe.posX = -1;
-    singe.posY = -1;
 
     T_liste liste_pref;
     initListe(&liste_pref);
@@ -211,7 +204,7 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
                 return allerEnBas(jungle, singe);
             case 4 :
                 printf("\nInvocation du dieu DONKEY-KONG !!!\n");
-                triLiane(jungle);
+                triNextLiane(jungle);
                 return false;
             case 5 :
                 printf("\nLe singe a saute a l'eau\n");
@@ -242,7 +235,7 @@ void jouer()
         if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
         clearConsole();
     }
-    while(!verifFin(jungle, singe));
+    while(!verifFin(jungleCourante));
 
     printf("Vous avez gagne !\n");
     printf("Le singe a reussi a traverser la riviere !\n");
@@ -254,6 +247,7 @@ void jouerAuto()
     T_singe singe = choixSinge();
     T_jungle jungle = creationJungle();
     afficheJungle(jungle, singe);
+    printf("\n %X", &singe);
     allerPremiereLiane(jungle, &singe);
 
     T_jungle jungleCourante = jungle;
@@ -262,10 +256,13 @@ void jouerAuto()
     do
     {
         doitAvancer = choixDirectionAuto(jungleCourante, &singe);
-        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
+        if(doitAvancer) {
+                jungleCourante = getNextLiane(jungleCourante);
+                printf("\nLE SINGE A AVANCE\n");
+        }
         clearConsole();
     }
-    while(!verifFin(jungle, singe));
+    while(!verifFin(jungleCourante));
 
     printf("Vous avez gagne !\n");
     printf("Le singe a reussi a traverser la riviere !\n");

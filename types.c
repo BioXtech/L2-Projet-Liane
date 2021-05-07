@@ -27,8 +27,3 @@ int getValPointAccroche(T_pointAccroche pt_accroche)
 {
     return pt_accroche.val;
 }
-
-void afficheListePref(T_singe s)
-{
-    afficheListeV1(s.listeIntPreferes);
-}

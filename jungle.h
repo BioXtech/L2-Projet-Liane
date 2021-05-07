@@ -33,7 +33,7 @@ bool verifHaut(T_jungle jungle, T_singe singe);
 bool verifFace(T_jungle jungle, T_singe singe);
 bool verifBas(T_jungle jungle, T_singe singe);
 bool verifDebut(T_jungle jungle, T_singe singe, int *indice);
-bool verifFin(T_jungle jungle, T_singe singe);
+bool verifFin(T_jungle jungle);
 
 bool allerEnHaut(T_jungle jungle, T_singe *singe);
 bool allerEnFace(T_jungle jungle, T_singe *singe);

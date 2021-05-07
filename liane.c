@@ -17,6 +17,23 @@ bool lianeVide(T_liane l)
     return (l==NULL);
 }
 
+void debugLiane(T_liane l)
+{
+    struct T_cell_liane *ptrCourant = l;
+    printf("Liste\n-----\n");
+    while(ptrCourant != NULL)
+    {
+        printf("##########\n");
+        printf("# Ptr case d'avant: %X\n", ptrCourant->prec);
+        printf("# Ptr de la case courante: %X\n",ptrCourant);
+        printf("# Valeur : %d\n",*(ptrCourant->data));
+        printf("# Ptr case d'apres: %X\n", ptrCourant->suiv);
+        printf("##########\n");
+        ptrCourant = ptrCourant->suiv;
+    }
+    printf("-----\n\n");
+}
+
 T_liane ajoutNombreALiane(T_liane l, int nombre)
 {
     T_liane newl = (T_liane)malloc(sizeof(struct T_cell_liane));
@@ -30,8 +47,9 @@ T_liane ajoutNombreALiane(T_liane l, int nombre)
     }
     else
     {
-        newl -> suiv = l;
-        l -> prec = newl;
+        newl->prec = NULL;
+        newl->suiv = l;
+        l->prec = newl;
     }
 
     return newl;
@@ -98,9 +116,9 @@ T_liane getptrLastPA(T_liane l)
     else
     {
         // On rembobine la liste afin de retourner le pointeur de la première case
-        while(getptrNextPA(l) != NULL)
+        while(getptrNextPA(ptrCourant) != NULL)
         {
-            ptrCourant = getptrNextPA(l);
+            ptrCourant = getptrNextPA(ptrCourant);
         }
         return ptrCourant;
     }
@@ -117,9 +135,9 @@ T_liane getptrFirstPA(T_liane l)
     else
     {
         // On rembobine la liste afin de retourner le pointeur de la première case
-        while(getptrPrevPA(l) != NULL)
+        while(getptrPrevPA(ptrCourant) != NULL)
         {
-            ptrCourant = getptrPrevPA(l);
+            ptrCourant = getptrPrevPA(ptrCourant);
         }
         return ptrCourant;
     }

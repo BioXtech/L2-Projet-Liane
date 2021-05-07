@@ -159,7 +159,7 @@ bool verifHaut(T_jungle jungle, T_singe singe)
     T_liane liane_courante = *(getLiane(jungle));
     int hauteurSinge = getHauteurSinge(liane_courante);
 
-    if (verifSingePresent(*getPA(getptrFirstPA(liane_courante))) || getNbrePA(liane_suivante)-1 < hauteurSinge-1)
+    if (verifSingePresent(*getPA(getptrFirstPA(liane_courante))) || (getNbrePA(liane_suivante)-1 < hauteurSinge-1))
     {
         return false;
     }
@@ -227,21 +227,9 @@ bool verifDebut(T_jungle jungle, T_singe singe, int *indice)
     return false;
 }
 
-bool verifFin(T_jungle jungle, T_singe singe)
+bool verifFin(T_jungle jungle)
 {
-    T_jungle ptrCourant = jungle;
-    while (getNextLiane(jungle) != NULL)
-    {
-        ptrCourant = getNextLiane(jungle);
-    }
-    T_liane derniere_liane = *(getLiane(ptrCourant));
-    T_liane ptr_derniere_liane = derniere_liane;
-    while(derniere_liane != NULL)
-    {
-        if (verifSingePresent(*getPA(ptr_derniere_liane))) return true;
-        ptr_derniere_liane = getptrNextPA(ptr_derniere_liane);
-    }
-    return false;
+    return (jungle->suiv == NULL);
 }
 
 bool allerEnHaut(T_jungle jungle, T_singe *singe)
@@ -269,6 +257,7 @@ bool allerEnFace(T_jungle jungle, T_singe *singe)
         int hauteurSinge = getHauteurSinge(liane_courante);
 
         T_singe *adresse_singe = getPA(getPAEnN(liane_courante, hauteurSinge))->est_present;
+        printf("ADRESSE SINGE : %X PROUT %X", singe, adresse_singe);
         getPA(getPAEnN(liane_courante, hauteurSinge))->est_present = NULL;
         getPA(getPAEnN(lianeSuivante, hauteurSinge))->est_present = adresse_singe;
         return true;
