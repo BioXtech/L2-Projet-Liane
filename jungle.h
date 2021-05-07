@@ -46,8 +46,7 @@ T_jungle genererJungle();
 
 void sauterEau();
 
-void triLiane(T_jungle jungle);
-void tri_selection_liane(T_liane l);
+void triNextLiane(T_jungle jungle);
 
 bool verifTriLiane(T_jungle jungle);
 

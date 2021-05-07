@@ -23,8 +23,10 @@ T_liane getptrLastPA(T_liane l);
 T_liane getptrFirstPA(T_liane l);
 T_liane getPAEnN(T_liane liane, int n);
 int getNbrePA(T_liane l);
-T_pointAccroche *getPA(T_liane l)
+T_pointAccroche *getPA(T_liane l);
 int getHauteurSinge(T_liane l);
+void swapPA( T_liane source, T_liane destination );
+void tri_selection_liane(T_liane l);
 
 
 #endif // LIANE_H_INCLUDED

@@ -20,7 +20,7 @@ void afficheLiane(T_liane l, T_singe s, int posX)
 {
     T_liane ptrCourant = l; // T_liane = struct T_cell*
     int posY = 0;
-    while(!listeVide(ptrCourant))
+    while(!lianeVide(ptrCourant))
     {
         if(posX == s.posX && posY == s.posY)
         {
@@ -149,7 +149,7 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
                 return allerEnBas(jungle, singe);
             case 4 :
                 printf("\nVous avez invoque le dieu DONKEY-KONG !!!\n");
-                triLiane(jungle);
+                triNextLiane(jungle);
                 return false;
             case 5 :
                 printf("\nVous avez choisi de sauter a l'eau\n");

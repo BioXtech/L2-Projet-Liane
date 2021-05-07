@@ -23,7 +23,7 @@ T_liane ajoutNombreALiane(T_liane l, int nombre)
     newl->data = initPointAccroche();
     remplirPointAccroche(newl->data, nombre, NULL);
 
-    if (listeVide(l))
+    if (lianeVide(l))
     {
         newl -> suiv = NULL;
         newl -> prec = NULL;
@@ -140,16 +140,16 @@ int getNbrePA(T_liane l)
 {
     T_liane ptrCourant = l;
     int nombre = 1;
-    if (lianeVide(l))
+    if (lianeVide(ptrCourant))
     {
         nombre = 0;
         return nombre;
     }
     else
     {
-        while (getptrNextPA(l) != NULL)
+        while (getptrNextPA(ptrCourant) != NULL)
         {
-            ptrCourant = getptrNextPA(l);
+            ptrCourant = getptrNextPA(ptrCourant);
             nombre = nombre + 1;
         }
         //printf("\n Le nombre de cellules est : %d\n", nombre);
@@ -166,7 +166,7 @@ T_pointAccroche *getPA(T_liane l)
     else
     {
         //printf("\nValeur : %X\n", ptrCourant->data);
-        return ptrCourant->data;
+        return l->data;
     }
 }
 
@@ -174,18 +174,49 @@ int getHauteurSinge(T_liane l)
 {
     T_liane ptrCourant = l;
     int nombre = 0;
-    if (lianeVide(l))
+    if (lianeVide(ptrCourant))
     {
         return -1;
     }
     else
     {
-        while (!verifSingePresent(getPA(l)))
+        while (!verifSingePresent(*getPA(ptrCourant)))
         {
-            ptrCourant = getptrNextPA(l);
+            ptrCourant = getptrNextPA(ptrCourant);
             nombre = nombre + 1;
         }
         //printf("\n Le nombre de cellules est : %d\n", nombre);
         return nombre;
+    }
+}
+
+void swapPA( T_liane source, T_liane destination )
+{
+    if (lianeVide(source) || lianeVide(destination))
+    {
+        return;
+    }
+    else
+    {
+        T_pointAccroche *entier_temp = destination->data;
+        destination->data = source->data;
+        source->data = entier_temp;
+    }
+}
+
+void tri_selection_liane(T_liane l)
+{
+    T_liane current, j, min;
+    for(current = l; getptrNextPA(current) != NULL; current = getptrNextPA(current))
+    {
+        min = current;
+        for(j = current; j != NULL; j = getptrNextPA(j))
+        {
+            if(getValPointAccroche(*(getPA(j)))< getValPointAccroche(*(getPA(min))))
+            {
+                min = j;
+            }
+        }
+        swapPA(current,min);
     }
 }
