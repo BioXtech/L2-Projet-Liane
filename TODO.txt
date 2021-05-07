@@ -2,4 +2,19 @@ TODO LIST
 
 InitSinge: verifier s'il n'y a pas un ajout en double dans la liste
 
-Lianes: ajout en tete et pas en fin pour ameliorer la complexité en temps
+supprimer fonction inutiles
+
+ajout du if du tri pour savoir si la liane est triee (Version 1 et 2)
+
+mettre des coms a chaque fonction
+
+Standardiser les noms de fonction et nom de variables
+
+Standardiser les syntaxes avec les espaces surtout avec les etoiles des pointeurs
+
+Format AStyle le projet entier
+
+
+VERSION 1 REJOUTER LA PARENTHESE DANS LE PRINTF DE INITSINGE
+
+Verifier les critères du sujet
