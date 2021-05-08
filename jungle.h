@@ -11,7 +11,7 @@ typedef struct T_jungle_cell
     struct T_jungle_cell *suiv;
     struct T_jungle_cell *prec;
     T_liane *courante;
-}* T_jungle;
+} *T_jungle;
 
 void initJungle(T_jungle *jungle);
 

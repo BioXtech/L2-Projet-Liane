@@ -7,84 +7,97 @@
 #include "interface.h"
 #include "liste.h"
 
+// Paramètres : Aucun
+// Résultat : Aucun
+// Definition : Cette fonction permet de faire de l'espace dans la console et ainsi d'offrir une meilleure lisibilité
 void clearConsole()
 {
-    for(int i = 0; i < 50; i++)
+    for(int i = 0; i < 50; i++) // Pour i allant de 0 à 49
     {
-        printf("\n");
+        printf("\n"); // On affiche un retour à la ligne
     }
 }
-// Paramètres :
-// Résultat :
-// Definition :
+
+// Paramètres : Une liane l et un singe s
+// Résultat : Aucun
+// Definition : Cette fonction permet d'afficher une liane
 void afficheLiane(T_liane l, T_singe s)
 {
-    T_liane ptrCourant = l; // T_liane = struct T_cell*
-    while(!lianeVide(ptrCourant))
+    T_liane ptrCourant = l; // Creation d'un pointeur copie de la liane en paramètre, afin de parcourir cette dernière.
+    while(!lianeVide(ptrCourant)) // Tant que la case case pointée de la liane n'est pas nulle, c'est-à-dire tant que le pointeur n'a pas parcouru toute la liane
     {
-        if(verifSingePresent(*getPA(ptrCourant)))
+        if(verifSingePresent(*getPA(ptrCourant))) // Si le singe est présent sur le point d'accroche de la case pointée de la liane
         {
-            printf("-%c-", s.nom[0]);
+            printf("-%c-", s.nom[0]); // Alors on affiche l'initiale du singe appelé en paramètre
         }
         else
         {
-            printf("-%d-", getValPointAccroche(*getPA(ptrCourant)));
+            printf("-%d-", getValPointAccroche(*getPA(ptrCourant))); // Sinon, on affiche la valeur entière du point d'accroche de la case pointée de la liane
         }
-        ptrCourant = getptrNextPA(ptrCourant);
+        ptrCourant = getptrNextPA(ptrCourant); // Le pointeur pointe la case suivante de la liane, et ainsi on revérifie la condition du while
     }
-    printf("\n");
+    printf("\n"); // On affiche un retour à la ligne
 }
 
+// Paramètres : Une jungle j et un singe s
+// Résultat : Aucun
+// Definition : Cette fonction permet d'afficher la jungle en appelant la fonction d'affichage d'une liane plusieurs fois
 void afficheJungle(T_jungle j, T_singe s)
 {
-    T_jungle ptrCourant = j; // T_jungle = struct T_jungle_cell*
-    while(getPrecLiane(ptrCourant) != NULL)
+    T_jungle ptrCourant = j; // Creation d'un pointeur copie de la jungle en paramètre, afin de parcourir cette dernière.
+    while(getPrecLiane(ptrCourant) != NULL) // Tant que le pointeur ne pointe pas sur la première liane (case précédente doit être nulle)
     {
-        ptrCourant = getPrecLiane(ptrCourant);
-    }
+        ptrCourant = getPrecLiane(ptrCourant); // Le pointeur pointe sur la liane précédente
+    }                                          // Cette vérification est nécessaire puisque la jungle appelée en paramètre pointe sur la liane ou est le singe, et non la première.
     printf("\n########## JUNGLE ##########\n\n");
-    while(!jungleVide(ptrCourant))
+    while(!jungleVide(ptrCourant)) // Tant que la case case pointée de la jungle n'est pas nulle, c'est-à-dire tant que le pointeur n'a pas parcouru toute la jungle
     {
-        afficheLiane(*getLiane(ptrCourant), s);
-        ptrCourant = getNextLiane(ptrCourant);
+        afficheLiane(*getLiane(ptrCourant), s); // On fait appel à la fonction d'affichage d'une liane
+        ptrCourant = getNextLiane(ptrCourant); // Puis notre jungle pointe sur la liane suivante, et on revérifie la condition du while
     }
     printf("\n############################\n");
 }
 
+// Paramètres : Aucun
+// Résultat : Un singe
+// Definition : Cette fonction permet d'initialiser un singe (Type T_singe) en fonction des choix de l'utilisateur
 T_singe initSinge()
 {
-    T_singe singe;
+    T_singe singe; // Declaration du singe
     printf("\n########## INITIALISATION DU SINGE ##########");
-    int id;
-    printf("\nSaisissez l'ID du singe (numero entre 1 et 50) : ");
-    scanf("%d", &id);
-    singe.id = id;
+    int id; // Declaration de l'ID du singe
+    printf("\nSaisissez l'ID du singe (numero entre 1 et 50) : "); // On demande à l'utilisateur de saisir l'ID du singe
+    scanf("%d", &id); // On récupère la valeur entrée par l'utilisateur
+    singe.id = id; // On donne ainsi cette dernière au singe crée
 
-    char nom[10];
-    printf("\nSaisissez le nom a attribuer au singe : ");
-    scanf("%s", nom);
-    strcpy(singe.nom,nom);
+    char nom[10]; // Declaration d'une chaine de caractère (nom du singe)
+    printf("\nSaisissez le nom a attribuer au singe : "); // On demande à l'utilisateur de saisir le nom du singe
+    scanf("%s", nom); // On récupère le nom entrée par l'utilisateur
+    strcpy(singe.nom,nom); // On donne ainsi celui-ci au singe crée (besoin de la bibliothèque string.h pour strcpy)
 
-    T_liste liste_pref;
-    initListe(&liste_pref);
-    int val = 0;
+    T_liste liste_pref; // Declaration d'une liste (entiers préférés du singe)
+    initListe(&liste_pref); // Initialisation de la liste à NULL pour le moment en appelant la fonction initListe
+    int val = 0; // Declaration d'un entier val qui représentera à chaque fois la valeur à ajouter à la liste
 
-    while (val > -1)
+    while (val > -1) // Tant que l'entier val est strictement supérieur à -1
     {
-        printf("\nSaisissez une valeur a ajouter a la liste du singe (-1 pour arreter) : ");
-        scanf("%d", &val);
-        if(val >= 0 && val <= 9)
+        printf("\nSaisissez une valeur a ajouter a la liste du singe (-1 pour arreter) : "); // On demande à l'utilisateur de saisir une valeur à ajouter à la liste préférée
+        scanf("%d", &val); // On récupère cette valeur
+        if(val >= 0 && val <= 9) // Si la valeur est comprise entre 0 et 9
         {
-            liste_pref = ajoutEnTete(liste_pref, val);
-        }
-    }
-    singe.listeIntPreferes = liste_pref;
+            liste_pref = ajoutEnTete(liste_pref, val); // Alors elle est ajoutée à la liste préférée en faisant appel à une fonction d'ajout en Tête (complexité en temps meilleure qu'en fin)
+        }                                              // Sinon il ne se passe rien
+    }                                                  // Puis on revérifie la condition du while avec la valeur de val que l'utilisateur a entrée. S'il entre -1 la demande de saisie s'arrête
+    singe.listeIntPreferes = liste_pref; // On donne la liste créee au singe
 
     //printf("\n %d %s", id, nom);
 
-    return singe;
+    return singe; // Puis on retourne le singe initialisé
 }
 
+// Paramètres : Aucun
+// Résultat : Un singe
+// Definition : Cette fonction permet d'initialiser un singe en appelant la fonction précédente et donne une esthétique visuelle simple
 T_singe choixSinge()
 {
     printf("\n########## JEU DU SINGE ##########");
@@ -95,25 +108,31 @@ T_singe choixSinge()
     return singe;
 }
 
+// Paramètres : Aucun
+// Résultat : Une jungle
+// Definition : Cette fonction permet d'initialiser la jungle en appelant la génération de jungle, et permet une esthétique visuelle
 T_jungle creationJungle()
 {
     printf("\nCreation de la jungle en cours");
-    sleep(0.5);
-    printf(".");
+    sleep(0.5); // Le programme attend une demi-seconde
+    printf("."); // Affichage d'un point
     sleep(0.5);
     T_jungle jungle = genererJungle();
     printf(".");
     sleep(0.5);
-    printf(".");
+    printf("."); // Cela donne un aspect réel de chargement
     printf("\nJungle creee !!!");
-    return jungle;
+    return jungle; // On retourne la jungle initialisée
 }
 
+// Paramètres : Une jungle "jungle" et un singe "singe"
+// Résultat : Un booléen
+// Definition : Cette fonction permet à l'utilisateur de choisir la direction que le singe doit emprunter selon les possibilités
 bool choixDirection(T_jungle jungle, T_singe* singe)
 {
-    int numero_menu;
+    int numero_menu; // Declaration d'un entier qui sera changé selon le choix de l'utilisateur pour entrer en paramètre de la fonction switch
 
-    do
+    do // Do-while pour parcourir au minimum une fois la boucle et permettre de recommencer la boucle tant que la condition n'est pas vérifiée
     {
         printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
         afficheJungle(jungle, *singe);
@@ -123,7 +142,7 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
         if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
         if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
         if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
-        printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
+        if (!verifTriLiane(jungle)) printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
         printf("5/ Sauter a l'eau\n");
         printf("-----------------------------------------------------------\n");
 
