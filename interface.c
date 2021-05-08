@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include "interface.h"
 #include "liste.h"
@@ -74,7 +75,7 @@ T_singe initSinge()
         scanf("%d", &val);
         if(val >= 0 && val <= 9)
         {
-            liste_pref = ajoutEnFin(liste_pref, val);
+            liste_pref = ajoutEnTete(liste_pref, val);
         }
     }
     singe.listeIntPreferes = liste_pref;
@@ -219,7 +220,7 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
     return false;
 }
 
-void jouer()
+void jouer(bool autoMode)
 {
     T_singe singe = choixSinge();
     T_jungle jungle = creationJungle();
@@ -231,35 +232,16 @@ void jouer()
 
     do
     {
-        doitAvancer = choixDirection(jungleCourante, &singe);
-        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
-        clearConsole();
-    }
-    while(!verifFin(jungleCourante));
-
-    printf("Vous avez gagne !\n");
-    printf("Le singe a reussi a traverser la riviere !\n");
-
-}
-
-void jouerAuto()
-{
-    T_singe singe = choixSinge();
-    T_jungle jungle = creationJungle();
-    afficheJungle(jungle, singe);
-    printf("\n %X", &singe);
-    allerPremiereLiane(jungle, &singe);
-
-    T_jungle jungleCourante = jungle;
-    bool doitAvancer = false;
-
-    do
-    {
-        doitAvancer = choixDirectionAuto(jungleCourante, &singe);
-        if(doitAvancer) {
-                jungleCourante = getNextLiane(jungleCourante);
-                printf("\nLE SINGE A AVANCE\n");
+        if(autoMode)
+        {
+            doitAvancer = choixDirectionAuto(jungleCourante, &singe);
         }
+        else
+        {
+            doitAvancer = choixDirection(jungleCourante, &singe);
+        }
+
+        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
         clearConsole();
     }
     while(!verifFin(jungleCourante));
@@ -290,11 +272,11 @@ void choixTypeJeu()
         {
             case 1 :
                 printf("\nVous avez choisi le mode manuel\n");
-                jouer();
+                jouer(false);
                 break;
             case 2 :
                 printf("\nVous avez choisi le mode automatique\n");
-                jouerAuto();
+                jouer(true);
                 break;
             default :
                 printf("\nNumero non compris entre 1 et 2\n");

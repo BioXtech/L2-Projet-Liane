@@ -8,9 +8,9 @@
 
 typedef struct T_jungle_cell
 {
-    struct T_jungle_cell* suiv;
-    struct T_jungle_cell* prec;
-    T_liane* courante;
+    struct T_jungle_cell *suiv;
+    struct T_jungle_cell *prec;
+    T_liane *courante;
 }* T_jungle;
 
 void initJungle(T_jungle *jungle);
@@ -21,7 +21,6 @@ T_jungle getNextLiane(T_jungle jungle);
 T_jungle getPrecLiane(T_jungle jungle);
 
 T_liane *getLiane(T_jungle jungle);
-T_jungle getLianeEnN(T_jungle jungle, int n);
 
 int getNombreLiane(T_jungle jungle);
 

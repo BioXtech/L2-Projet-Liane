@@ -4,9 +4,9 @@
 
 #include "types.h"
 
-T_pointAccroche * initPointAccroche()
+T_pointAccroche *initPointAccroche()
 {
-    T_pointAccroche * pointAccroche = (T_pointAccroche *)malloc(sizeof(T_pointAccroche));
+    T_pointAccroche *pointAccroche = (T_pointAccroche *)malloc(sizeof(T_pointAccroche));
     pointAccroche->val = 0;
     pointAccroche->est_present = NULL;
 
@@ -17,7 +17,7 @@ bool verifSingePresent(T_pointAccroche pt_accroche)
     return pt_accroche.est_present != NULL;
 }
 
-void remplirPointAccroche(T_pointAccroche * pt_accroche, int val, T_singe * singe)
+void remplirPointAccroche(T_pointAccroche * pt_accroche, int val, T_singe *singe)
 {
     pt_accroche->val = val;
     pt_accroche->est_present = singe;

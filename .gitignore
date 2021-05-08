@@ -54,3 +54,4 @@ dkms.conf
 *.layout
 *.save
 *.depend
+*.cscope_file_list

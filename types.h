@@ -26,13 +26,13 @@ typedef T_singeV2 T_singe;
 typedef struct
 {
     int val;
-    T_singe* est_present; //NULL si pas de singe, l'adresse du singe si présent
+    T_singe *est_present; //NULL si pas de singe, l'adresse du singe si présent
 } T_pointAccroche;
 
 int getValPointAccroche(T_pointAccroche pt_accroche);
 bool verifSingePresent(T_pointAccroche pt_accroche);
-T_pointAccroche * initPointAccroche();
-void remplirPointAccroche(T_pointAccroche * pt_accroche, int val, T_singe * singe);
+T_pointAccroche* initPointAccroche();
+void remplirPointAccroche(T_pointAccroche *pt_accroche, int val, T_singe *singe);
 
 void afficheListePref(T_singe singe);
 

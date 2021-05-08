@@ -42,8 +42,8 @@ T_liane ajoutNombreALiane(T_liane l, int nombre)
 
     if (lianeVide(l))
     {
-        newl -> suiv = NULL;
-        newl -> prec = NULL;
+        newl->suiv = NULL;
+        newl->prec = NULL;
     }
     else
     {
@@ -96,7 +96,7 @@ T_liane getptrPrevPA(T_liane l)
     T_liane ptrCourant = l;
     if (lianeVide(l))
     {
-        printf("\nErreur getptrPrevCell : Pointeur NULL");
+        printf("\nErreur getptrPrevPA : Pointeur NULL");
         return NULL;
     }
     else
@@ -201,7 +201,7 @@ int getHauteurSinge(T_liane l)
         while (!verifSingePresent(*getPA(ptrCourant)))
         {
             ptrCourant = getptrNextPA(ptrCourant);
-            nombre = nombre + 1;
+            nombre++;
         }
         //printf("\n Le nombre de cellules est : %d\n", nombre);
         return nombre;
@@ -210,11 +210,7 @@ int getHauteurSinge(T_liane l)
 
 void swapPA( T_liane source, T_liane destination )
 {
-    if (lianeVide(source) || lianeVide(destination))
-    {
-        return;
-    }
-    else
+    if (!lianeVide(source) && !lianeVide(destination))
     {
         T_pointAccroche *entier_temp = destination->data;
         destination->data = source->data;

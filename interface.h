@@ -1,6 +1,8 @@
 #ifndef INTERFACE_H_INCLUDED
 #define INTERFACE_H_INCLUDED
 
+#include <stdbool.h>
+
 #include "jungle.h"
 #include "types.h"
 
@@ -12,11 +14,10 @@ T_singe initSinge();
 
 T_singe choixSinge();
 T_jungle creationJungle();
-bool choixDirection(T_jungle jungle, T_singe* singe);
+bool choixDirection(T_jungle jungle, T_singe *singe);
 
 
-void jouer();
-void jouerAuto();
+void jouer(bool autoMode);
 void choixTypeJeu();
 
 #endif // INTERFACE_H_INCLUDED

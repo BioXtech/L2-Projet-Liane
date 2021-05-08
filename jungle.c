@@ -59,16 +59,6 @@ T_liane *getLiane(T_jungle j)
     }
 }
 
-T_jungle getLianeEnN(T_jungle jungle, int n)
-{
-    T_jungle ptrCourant = jungle;
-    for (int i = 0; i <= n; i++)
-    {
-        ptrCourant = getNextLiane(ptrCourant);
-    }
-    return ptrCourant;
-}
-
 int getNombreLiane(T_jungle j)
 {
     T_jungle ptrCourant = j;
@@ -82,7 +72,7 @@ int getNombreLiane(T_jungle j)
         while (ptrCourant->suiv != NULL)
         {
             ptrCourant = ptrCourant->suiv;
-            compteur += 1;
+            compteur++;
         }
         return compteur;
     }
@@ -99,21 +89,15 @@ T_jungle ajoutLianeAJungle(T_jungle j, T_liane l)
     {
         newj->prec = NULL;
         newj->suiv = NULL;
-        return newj;
     }
     else
     {
-        T_jungle temp = j;
-        while (temp->suiv != NULL)
-        {
-            temp = temp->suiv;
-        }
-        newj->prec = temp;
-        newj->suiv = NULL;
-        temp->suiv = newj;
+        newj->prec = NULL;
+        newj->suiv = j;
+        j->prec = newj;
     }
 
-    return j;
+    return newj;
 }
 /*
 void debugJungle(T_jungle j)
@@ -213,6 +197,7 @@ bool verifDebut(T_jungle jungle, T_singe singe, int *indice)
     while (!lianeVide(premiere_liane))
     {
         nombreCible = getValPointAccroche(*(getPA(premiere_liane)));
+        printf("Nombre cible %d\n",nombreCible);
         if (getOccurences(singe.listeIntPreferes, nombreCible) > 0)
         {
             return true;
@@ -257,7 +242,6 @@ bool allerEnFace(T_jungle jungle, T_singe *singe)
         int hauteurSinge = getHauteurSinge(liane_courante);
 
         T_singe *adresse_singe = getPA(getPAEnN(liane_courante, hauteurSinge))->est_present;
-        printf("ADRESSE SINGE : %X PROUT %X", singe, adresse_singe);
         getPA(getPAEnN(liane_courante, hauteurSinge))->est_present = NULL;
         getPA(getPAEnN(lianeSuivante, hauteurSinge))->est_present = adresse_singe;
         return true;
