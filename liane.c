@@ -3,15 +3,19 @@
 #include <stdbool.h>
 
 #include "liane.h"
-#include "liste.h"
 #include "types.h"
 
-
+// Paramètres : Un pointeur vers un T_liane
+// Résultat : Aucun
+// Definition : Cette fonction permet d'initialiser une liane sans case a un pointeur nul
 void initLiane(T_liane *l)
 {
     *l = NULL;
 }
 
+// Paramètres : Une T_liane
+// Résultat : Un boolean
+// Definition : Cette fonction permet de savoir si une liste est vide ou non
 bool lianeVide(T_liane l)
 {
     return (l==NULL);

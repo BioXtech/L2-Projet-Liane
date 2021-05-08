@@ -68,21 +68,6 @@ T_liste getptrNextCell(T_liste l)
     }
 }
 
-T_liste getptrPrevCell(T_liste l)
-{
-    T_liste ptrCourant = l;
-    if (listeVide(l))
-    {
-        printf("\nErreur getptrPrevCell : Pointeur NULL");
-        return NULL;
-    }
-    else
-    {
-        return ptrCourant->prec;
-    }
-}
-
-
 int* getPtrData(T_liste l)
 {
     T_liste ptrCourant = l;

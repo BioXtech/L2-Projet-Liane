@@ -15,9 +15,10 @@ Version 2
 
 int main()
 {
-    srand (time (NULL));
+    srand (time (NULL)); // Initialise le generateur aleatoire
 
+    // Commence le jeu
     choixTypeJeu();
 
-    exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS); // Quitte le jeu
 }

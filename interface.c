@@ -24,7 +24,7 @@ void clearConsole()
 void afficheLiane(T_liane l, T_singe s)
 {
     T_liane ptrCourant = l; // Creation d'un pointeur copie de la liane en paramètre, afin de parcourir cette dernière.
-    while(!lianeVide(ptrCourant)) // Tant que la case case pointée de la liane n'est pas nulle, c'est-à-dire tant que le pointeur n'a pas parcouru toute la liane
+    while(!lianeVide(ptrCourant)) // Tant que la case pointée de la liane n'est pas nulle, c'est-à-dire tant que le pointeur n'a pas parcouru toute la liane
     {
         if(verifSingePresent(*getPA(ptrCourant))) // Si le singe est présent sur le point d'accroche de la case pointée de la liane
         {
@@ -50,7 +50,7 @@ void afficheJungle(T_jungle j, T_singe s)
         ptrCourant = getPrecLiane(ptrCourant); // Le pointeur pointe sur la liane précédente
     }                                          // Cette vérification est nécessaire puisque la jungle appelée en paramètre pointe sur la liane ou est le singe, et non la première.
     printf("\n########## JUNGLE ##########\n\n");
-    while(!jungleVide(ptrCourant)) // Tant que la case case pointée de la jungle n'est pas nulle, c'est-à-dire tant que le pointeur n'a pas parcouru toute la jungle
+    while(!jungleVide(ptrCourant)) // Tant que la case pointée de la jungle n'est pas nulle, c'est-à-dire tant que le pointeur n'a pas parcouru toute la jungle
     {
         afficheLiane(*getLiane(ptrCourant), s); // On fait appel à la fonction d'affichage d'une liane
         ptrCourant = getNextLiane(ptrCourant); // Puis notre jungle pointe sur la liane suivante, et on revérifie la condition du while
@@ -117,7 +117,7 @@ T_jungle creationJungle()
     sleep(0.5); // Le programme attend une demi-seconde
     printf("."); // Affichage d'un point
     sleep(0.5);
-    T_jungle jungle = genererJungle();
+    T_jungle jungle = genererJungle(); // Generation de la jungle
     printf(".");
     sleep(0.5);
     printf("."); // Cela donne un aspect réel de chargement
@@ -126,7 +126,7 @@ T_jungle creationJungle()
 }
 
 // Paramètres : Une jungle "jungle" et un singe "singe"
-// Résultat : Un booléen
+// Résultat : Un booléen representant si le pointeur courant de la liane doit avancer d'une liane ou pas pour le prochain tour
 // Definition : Cette fonction permet à l'utilisateur de choisir la direction que le singe doit emprunter selon les possibilités
 bool choixDirection(T_jungle jungle, T_singe* singe)
 {
@@ -135,11 +135,11 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
     do // Do-while pour parcourir au minimum une fois la boucle et permettre de recommencer la boucle tant que la condition n'est pas vérifiée
     {
         printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
-        afficheJungle(jungle, *singe);
+        afficheJungle(jungle, *singe); // Affiche l'etat actuel de la jungle
 
         printf("\nChoisissez parmi les propositions suivantes le traitement a effectuer (taper le numero)\n");
         printf("\n-----------------------------------------------------------\n");
-        if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
+        if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n"); // Affiche ou non les choix s'ils sont disponibles ou non pour le joueur
         if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
         if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
         if (!verifTriLiane(jungle)) printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
@@ -149,6 +149,7 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
         printf("\nChoisissez un numero parmi les possibilites : \n");
         scanf("%d", &numero_menu);
 
+        // Switch case permettant d'effectuer le choix de l'utilisateur en appelant la fonction correspondante
         switch(numero_menu)
         {
             case 1 :
@@ -173,94 +174,95 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
                 break;
         }
     }
-    while(numero_menu < 1 && numero_menu > 5);
+    while(numero_menu < 1 && numero_menu > 5); // Verifie si le nombre rentre correspond a un choix possible
     return false;
 }
 
+// Paramètres : Une jungle "jungle" et un singe "singe"
+// Résultat : Un booléen representant si le pointeur courant de la liane doit avancer d'une liane ou pas pour le prochain tour
+// Definition : Cette fonction permet d'avoir un mode automatique ou l'ordinateur joue tout seul au jeu
 bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
 {
-    int numero_menu;
+    int numero_menu; // Declaration d'un entier qui sera changé selon le choix de l'utilisateur pour entrer en paramètre de la fonction switch
 
-    do
+    printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
+    afficheJungle(jungle, *singe); // Affiche l'etat actuel de la jungle
+
+    printf("\nLes possibilites sont les suivantes\n");
+    printf("\n-----------------------------------------------------------\n");
+    if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n"); // Affiche ou non les choix s'ils sont disponibles ou non pour le joueur
+    if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
+    if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
+    if (!verifTriLiane(jungle)) printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
+    printf("5/ Sauter a l'eau\n");
+    printf("-----------------------------------------------------------\n");
+
+    // Effet visuel permettant de montrer que l'ordinateur reflechit
+    printf("\nChoix parmi les possibilites : \n");
+    sleep(1);
+    printf(".");
+    sleep(1);
+    printf(".");
+    sleep(1);
+    printf(".");
+    numero_menu = 5;
+
+    // Choix de la direction prise par l'ordinateur
+    if (verifHaut(jungle,*singe)) numero_menu = 1; // Le singe monte
+    else if (verifFace(jungle,*singe)) numero_menu = 2; // Sinon il va en face
+    else if (verifBas(jungle,*singe)) numero_menu = 3; // Sinon il descend
+    else if (!verifTriLiane(jungle)) numero_menu = 4; // Sinon il invoque le tri
+    else numero_menu = 5; // Et s'il ne peut aller nul part il saute dans l'eau
+
+    // Switch case permettant d'effectuer le choix precedent
+    switch(numero_menu)
     {
-        printf("\nVoici la jungle, l'initiale du singe represente sa position actuelle\n");
-        afficheJungle(jungle, *singe);
-
-        printf("\nLes possibilites sont les suivantes\n");
-        printf("\n-----------------------------------------------------------\n");
-        if (verifHaut(jungle,*singe)) printf("1/ Aller en haut\n");
-        if (verifFace(jungle,*singe)) printf("2/ Aller en face\n");
-        if (verifBas(jungle,*singe)) printf("3/ Aller en bas\n");
-        if (!verifTriLiane(jungle)) printf("4/ Invocation dieu DONKEY-KONG (trier entiers liane suivante)\n");
-        printf("5/ Sauter a l'eau\n");
-        printf("-----------------------------------------------------------\n");
-
-        printf("\nChoix parmi les possibilites : \n");
-        sleep(1);
-        printf(".");
-        sleep(1);
-        printf(".");
-        sleep(1);
-        printf(".");
-        numero_menu = 5;
-
-        if (verifHaut(jungle,*singe)) numero_menu = 1;
-        else if (verifFace(jungle,*singe)) numero_menu = 2;
-        else if (verifBas(jungle,*singe)) numero_menu = 3;
-        else if (!verifTriLiane(jungle)) numero_menu = 4;
-        else numero_menu = 5;
-
-
-        switch(numero_menu)
-        {
-            case 1 :
-                printf("\nLe singe est alle en haut\n");
-                return allerEnHaut(jungle, singe);
-            case 2 :
-                printf("\nLe singe est alle en face\n");
-                return allerEnFace(jungle, singe);
-            case 3 :
-                printf("\nLe singe est alle en bas\n");
-                return allerEnBas(jungle, singe);
-            case 4 :
-                printf("\nInvocation du dieu DONKEY-KONG !!!\n");
-                triNextLiane(jungle);
-                return false;
-            case 5 :
-                printf("\nLe singe a saute a l'eau\n");
-                sauterEau();
-                break;
-            default :
-                printf("\nNumero non compris entre 1 et 5\n");
-                break;
-        }
+        case 1 :
+            printf("\nLe singe est alle en haut\n");
+            return allerEnHaut(jungle, singe);
+        case 2 :
+            printf("\nLe singe est alle en face\n");
+            return allerEnFace(jungle, singe);
+        case 3 :
+            printf("\nLe singe est alle en bas\n");
+            return allerEnBas(jungle, singe);
+        case 4 :
+            printf("\nInvocation du dieu DONKEY-KONG !!!\n");
+            triNextLiane(jungle);
+            return false;
+        default :
+            printf("\nLe singe a saute a l'eau\n");
+            sauterEau();
+            break;
     }
-    while(numero_menu < 1 && numero_menu > 5);
     return false;
 }
 
+// Paramètres : Un booleen representant le mode de jeu
+// Résultat : Aucun
+// Definition : Cette fonction permet d'initaliser le jeu (singe, jungle, apparition du singe sur la premiere liane) puis d'appeler la fonction du mode de jeu demande par l'utilisateur
 void jouer(bool autoMode)
 {
-    T_singe singe = choixSinge();
-    T_jungle jungle = creationJungle();
-    afficheJungle(jungle, singe);
-    allerPremiereLiane(jungle, &singe);
+    T_singe singe = choixSinge(); // Initialise le singe
+    T_jungle jungle = creationJungle(); // Initialise la jungle
+    afficheJungle(jungle, singe); // Affiche une premiere fois la jungle sans le singe
+    allerPremiereLiane(jungle, &singe); // Accroche le singe sur la premiere liane
 
-    T_jungle jungleCourante = jungle;
-    bool doitAvancer = false;
+    T_jungle jungleCourante = jungle; // Pointeur courant permettant de parcourir la jungle, le pointeur courant pointe vers la liane ou le singe est present
+    bool doitAvancer = false; // booleen representant si le pointeur courant doit avancer d'une liane ou non en fonction du choix fait dans le jeu
 
-    do
+    do // Do-while permettant de savoir si le singe est arrive a la derniere liane et donc de savoir si le jeu est termine ou non
     {
-        if(autoMode)
+        if(autoMode) // If permettant d'appeler la fonction de jeu correspondant au mode de jeu choisi
         {
-            doitAvancer = choixDirectionAuto(jungleCourante, &singe);
+            doitAvancer = choixDirectionAuto(jungleCourante, &singe); // Fonction de choix de direction pour en mode automatique
         }
         else
         {
-            doitAvancer = choixDirection(jungleCourante, &singe);
+            doitAvancer = choixDirection(jungleCourante, &singe); // Fonction de choix de direction en demandant a l'utilisateur
         }
 
-        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante);
+        if(doitAvancer) jungleCourante = getNextLiane(jungleCourante); // Fait avancer le poniteur courant si le choix precedent n'est pas le tri ou le saut dans l'eau
         clearConsole();
     }
     while(!verifFin(jungleCourante));
@@ -270,9 +272,12 @@ void jouer(bool autoMode)
 
 }
 
+// Paramètres : Aucun
+// Résultat : Aucun
+// Definition : Cette fonction permet de demander à l'utilisateur le mode de jeu qu'il souhaite
 void choixTypeJeu()
 {
-    int numero_menu;
+    int numero_menu; // Numero representant le choix de l'utilisateur
 
     printf("\n########## JEU DU SINGE ##########");
 
@@ -282,11 +287,12 @@ void choixTypeJeu()
     printf("2/ Mode Automatique\n");
     printf("-----------------------------------------------------------\n");
 
-    do
+    do // Do-while pour parcourir au minimum une fois la boucle et permettre de recommencer la boucle tant que la condition n'est pas vérifiée
     {
         printf("\nChoisissez un numero parmi les deux possibilites : \n");
         scanf("%d", &numero_menu);
 
+        // Switch permettant d'appeler la fonction de jeu avec le mode correspondant en parametre
         switch(numero_menu)
         {
             case 1 :
