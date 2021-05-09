@@ -3,148 +3,122 @@
 #include <stdbool.h>
 #include "liste.h"
 
-//initListe ne fait pas de malloc, juste une initialisation � NULL du pointeur de liste
+// Paramètres : Une T_liste
+// Résultat : Aucun
+// Definition : Sans allocation dynamique, la fonction initialise à NULL un pointeur de liste
 void initListe(T_liste *l)
 {
-    *l=NULL;
+    *l = NULL;
 }
 
-
-bool listeVide( T_liste l)
+// Paramètres : Une T_liste
+// Résultat : Un booleen
+// Definition : Cette fonction permet de savoir si une liste est vide ou non
+bool listeVide(T_liste l)
 {
-    return (l==NULL);
+    return (l == NULL);
 }
 
-//A vous la suite
-/*
-void afficheListeV1( T_liste l){
-    if (listeVide(l))
-    {
-        printf("\nLa liste doublement chainee est vide\n");
-    }
-    //else if (l -> suiv = NULL){
-    //    printf("\nValeur unique : %d \n", *(l -> data));
-   // }
-    else
-    {
-        while(l -> suiv != NULL){
-            printf("Valeur : %d \n", *(l -> data));
-            l = l  -> suiv;
-        }
-    }
-}
-*/
-
+// Paramètres : Une T_liste
+// Résultat : Aucun
+// Definition : Cette fonction affiche une liste
 void afficheListeV1(T_liste l)
 {
     T_liste ptrCourant = l; // T_list = struct T_cell*
     printf("Liste\n-----\n");
-    while(ptrCourant != NULL)
+    while (ptrCourant != NULL)
     {
-        printf("%d\n",*(ptrCourant->data));
+        printf("%d\n", *(ptrCourant->data));
         ptrCourant = ptrCourant->suiv;
     }
     printf("-----\n\n");
 }
 
+// Paramètres : Une T_liste et un entier
+// Résultat : Une T_liste mise a jour
+// Definition : Cette fonction ajoute une case en tete de liste
 T_liste ajoutEnTete(T_liste l, int mydata)
 {
     T_liste newl = (T_liste)malloc(sizeof(struct T_cell));
-    newl -> data = (int *)malloc(sizeof(int));
-    *(newl -> data) = mydata;
+    newl->data = (int *)malloc(sizeof(int));
+    *(newl->data) = mydata;
 
     if (listeVide(l))
     {
-        newl -> suiv = NULL;
-        newl -> prec = NULL;
+        newl->suiv = NULL;
+        newl->prec = NULL;
     }
     else
     {
-        newl -> suiv = l;
-        l -> prec = newl;
+        newl->prec = NULL;
+        newl->suiv = l;
+        l->prec = newl;
     }
 
     return newl;
 }
 
-
+/*
 void debug(T_liste l)
 {
     struct T_cell *ptrCourant = l;
     printf("Liste\n-----\n");
-    while(ptrCourant != NULL)
+    while (ptrCourant != NULL)
     {
         printf("##########\n");
         printf("# Ptr case d'avant: %X\n", ptrCourant->prec);
-        printf("# Ptr de la case courante: %X\n",ptrCourant);
-        printf("# Valeur : %d\n",*(ptrCourant->data));
+        printf("# Ptr de la case courante: %X\n", ptrCourant);
+        printf("# Valeur : %d\n", *(ptrCourant->data));
         printf("# Ptr case d'apres: %X\n", ptrCourant->suiv);
         printf("##########\n");
         ptrCourant = ptrCourant->suiv;
     }
     printf("-----\n\n");
 }
+*/
 
-//dans cette version "l" est un pointeur sur le pointeur de la 1ere cellule.
-void ajoutEnTetePtr2Ptr(T_liste *l, int mydata)
-{
-    T_liste nouv = (T_liste)malloc(sizeof(struct T_cell));
-    //struct T_cell * nouv = (struct T_cell *)malloc(sizeof(struct T_cell))  //equivalent
-    nouv->data = (int*)malloc(sizeof(int));
-    *(nouv->data)=mydata;
-
-    if (*l==NULL) // on cree en fait la premiere cellule de la liste
-    {
-        nouv->suiv = NULL;
-        nouv->prec = NULL;
-    }
-    else  // la lste n'etait pas vide, on doit donc faire les branchements
-    {
-        nouv->suiv = *l;
-        (*l)->prec = nouv;
-    }
-    //on modifie l'adresse de la t�te de la liste, soit le contenu point� par l
-    *l=nouv;
-}
-
-
+// Paramètres : Une T_liste et un entier
+// Résultat : Une T_liste mise a jour
+// Definition : Cette fonction ajoute une case en fin de liste
 T_liste ajoutEnFin(T_liste l, int mydata)
 {
     T_liste newl = (T_liste)malloc(sizeof(struct T_cell));
-    newl -> data = (int *)malloc(sizeof(int));
-    *(newl -> data) = mydata;
+    newl->data = (int *)malloc(sizeof(int));
+    *(newl->data) = mydata;
 
     if (listeVide(l))
     {
-        newl -> suiv = NULL;
-        newl -> prec = NULL;
+        newl->suiv = NULL;
+        newl->prec = NULL;
 
         return newl;
     }
     else
     {
         T_liste temp_l = l;
-        while( temp_l -> suiv != NULL)
+        while (temp_l->suiv != NULL)
         {
-            temp_l = temp_l -> suiv;
+            temp_l = temp_l->suiv;
         }
-        temp_l -> suiv = newl;
-        newl -> prec = temp_l;
-        newl -> suiv = NULL;
+        temp_l->suiv = newl;
+        newl->prec = temp_l;
+        newl->suiv = NULL;
 
         return l;
     }
 }
 
-
+// Paramètres : Une T_liste, un entier pos et un entier data
+// Résultat : Une T_liste mise a jour
+// Definition : Cette fonction ajoute une case en n-ieme position dans la liste
 T_liste ajoutEnN(T_liste l, int pos, int mydata)
 {
 
     int len = 0;
     T_liste Cptr_l = l;
-    while (Cptr_l -> suiv != NULL)
+    while (Cptr_l->suiv != NULL)
     {
-        Cptr_l = Cptr_l -> suiv;
+        Cptr_l = Cptr_l->suiv;
         len++;
     }
 
@@ -152,35 +126,37 @@ T_liste ajoutEnN(T_liste l, int pos, int mydata)
     {
         l = ajoutEnTete(l, mydata);
     }
-    else if(pos >= len)
+    else if (pos >= len)
     {
         l = ajoutEnFin(l, mydata);
     }
     else
     {
         T_liste newl = (T_liste)malloc(sizeof(struct T_cell));
-        newl -> data = (int *)malloc(sizeof(int));
-        *(newl -> data) = mydata;
+        newl->data = (int *)malloc(sizeof(int));
+        *(newl->data) = mydata;
 
         T_liste temp_l = l;
         T_liste temp_l2 = l;
-        for(int i = 0; i < pos; i ++)
+        for (int i = 0; i < pos; i++)
         {
-            temp_l = temp_l -> suiv;
-            temp_l2 = temp_l2 -> suiv;
+            temp_l = temp_l->suiv;
+            temp_l2 = temp_l2->suiv;
         }
-        temp_l2 = temp_l2 -> suiv;
+        temp_l2 = temp_l2->suiv;
 
-        temp_l -> suiv = newl;
-        newl -> prec = temp_l;
-        newl -> suiv = temp_l2;
-        temp_l2 -> prec = newl;
+        temp_l->suiv = newl;
+        newl->prec = temp_l;
+        newl->suiv = temp_l2;
+        temp_l2->prec = newl;
     }
 
     return l;
 }
 
-
+// Paramètres : Une T_liste
+// Résultat : Une T_liste mise a jour
+// Definition : Cette fonction supprime une case en tete de liste et retourne la liste mise a jour
 T_liste suppEnTete(T_liste l)
 {
     if (listeVide(l))
@@ -189,16 +165,19 @@ T_liste suppEnTete(T_liste l)
     }
     else
     {
-        T_liste tmp = l -> suiv;
+        T_liste tmp = l->suiv;
         free(l);
         return tmp;
     }
 }
 
+// Paramètres : Une T_liste
+// Résultat : Une T_liste mise a jour
+// Definition : Cette fonction supprime une case en fin de liste et retourne la liste mise a jour
 T_liste suppEnFin(T_liste l)
 {
     T_liste tmp = l;
-    while(tmp->suiv != NULL)
+    while (tmp->suiv != NULL)
     {
         tmp = tmp->suiv;
     }
@@ -207,18 +186,21 @@ T_liste suppEnFin(T_liste l)
     return l;
 }
 
+// Paramètres : Une T_liste
+// Résultat : Une T_liste mise a jour
+// Definition : Cette fonction supprime une case en n-ieme position dans la liste et retourne la liste mise a jour
 T_liste suppEnN(T_liste l, int pos)
 {
-    if(listeVide(l))
+    if (listeVide(l))
     {
         perror("Erreur : La liste est vide !");
         return l;
     }
 
     T_liste ptrCourant = l;
-    for(int i = 0; i < pos; i++)
+    for (int i = 0; i < pos; i++)
     {
-        if(ptrCourant == NULL)
+        if (ptrCourant == NULL)
         {
             perror("Erreur : la liste n'est pas assez longue !");
             return l;
@@ -239,7 +221,9 @@ T_liste suppEnN(T_liste l, int pos)
     return l;
 }
 
-
+// Paramètres : Une T_liste
+// Résultat : Une T_liste
+// Definition : Cette fonction retourne la derniere case d'une liste
 T_liste getptrLastCell(T_liste l)
 {
     struct T_cell *ptrCourant = l;
@@ -251,7 +235,7 @@ T_liste getptrLastCell(T_liste l)
     else
     {
         // On rembobine la liste afin de retourner le pointeur de la première case
-        while(ptrCourant -> suiv != NULL)
+        while (ptrCourant->suiv != NULL)
         {
             ptrCourant = ptrCourant->suiv;
         }
@@ -259,6 +243,9 @@ T_liste getptrLastCell(T_liste l)
     }
 }
 
+// Paramètres : Une T_liste
+// Résultat : Une T_liste
+// Definition : Cette fonction retourne la premiere case d'une liste
 T_liste getptrFirstCell(T_liste l)
 {
     struct T_cell *ptrCourant = l;
@@ -270,7 +257,7 @@ T_liste getptrFirstCell(T_liste l)
     else
     {
         // On rembobine la liste afin de retourner le pointeur de la première case
-        while(ptrCourant -> prec != NULL)
+        while (ptrCourant->prec != NULL)
         {
             ptrCourant = ptrCourant->prec;
         }
@@ -278,7 +265,9 @@ T_liste getptrFirstCell(T_liste l)
     }
 }
 
-
+// Paramètres : Une T_liste
+// Résultat : Une T_liste
+// Definition : Cette fonction retourne la case suivante de la case passee en parametre
 T_liste getptrNextCell(T_liste l)
 {
     struct T_cell *ptrCourant = l;
@@ -293,6 +282,9 @@ T_liste getptrNextCell(T_liste l)
     }
 }
 
+// Paramètres : Une T_liste
+// Résultat : Une T_liste
+// Definition : Cette fonction retourne la case precedente de la case passee en parametre
 T_liste getptrPrevCell(T_liste l)
 {
     struct T_cell *ptrCourant = l;
@@ -307,17 +299,23 @@ T_liste getptrPrevCell(T_liste l)
     }
 }
 
+// Paramètres : Une T_liste
+// Résultat : Une T_liste
+// Definition : Cette fonction retourne la case n-ieme de la liste en parametre
 T_liste getCellEnN(T_liste liste, int n)
 {
     T_liste ptrCourant = liste;
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         ptrCourant = getptrNextCell(ptrCourant);
     }
     return ptrCourant;
 }
 
-int* getPtrData(T_liste l)
+// Paramètres : Une T_liste
+// Résultat : Un entier
+// Definition : Cette fonction retourne le champ data de la case en parametre
+int *getPtrData(T_liste l)
 {
     struct T_cell *ptrCourant = l;
     if (listeVide(l))
@@ -331,7 +329,10 @@ int* getPtrData(T_liste l)
     }
 }
 
-void swapPtrData( T_liste source, T_liste destination )
+// Paramètres : Deux T_liste
+// Résultat : Aucun
+// Definition : Cette fonction echange les deux champs data des deux cases
+void swapPtrData(T_liste source, T_liste destination)
 {
     if (listeVide(source) || listeVide(destination))
     {
@@ -345,7 +346,9 @@ void swapPtrData( T_liste source, T_liste destination )
     }
 }
 
-
+// Paramètres : Une T_liste
+// Résultat : Un entier
+// Definition : Cette fonction retourne le nombre decase d'une liste
 int getNbreCell(T_liste l)
 {
     struct T_cell *ptrCourant = l;
@@ -367,98 +370,9 @@ int getNbreCell(T_liste l)
     }
 }
 
-int getSizeBytes(T_liste l)
-{
-    int nbre_octets = sizeof(struct T_cell) *getNbreCell(l);
-    printf("\n Nombre d'octets : %d", nbre_octets);
-    return nbre_octets;
-}
-
-T_liste creatNewListeFromFusion(T_liste l1, T_liste l2)
-{
-    T_liste ptrCourantl1 = l1;
-    T_liste ptrCourantl2 = l2;
-    T_liste liste_finale;
-    initListe(&liste_finale);
-
-    if (listeVide(l1))
-    {
-        return ptrCourantl2;
-    }
-    else if (listeVide(l2))
-    {
-        return ptrCourantl1;
-    }
-    else
-    {
-        while(ptrCourantl1 != NULL)
-        {
-            liste_finale = ajoutEnFin(liste_finale, *(getPtrData(ptrCourantl1)));
-            ptrCourantl1 = ptrCourantl1->suiv;
-        }
-        while(ptrCourantl2 != NULL)
-        {
-            liste_finale = ajoutEnFin(liste_finale, *(getPtrData(ptrCourantl2)));
-            ptrCourantl2 = ptrCourantl2->suiv;
-        }
-        return liste_finale;
-    }
-}
-
-
-T_liste addBehind(T_liste debut, T_liste suite)
-{
-    T_liste ptrCourantl1 = debut;
-    T_liste ptrCourantl2 = suite;
-
-    if (listeVide(debut))
-    {
-        return ptrCourantl2;
-    }
-    else if (listeVide(suite))
-    {
-        return ptrCourantl1;
-    }
-    else
-    {
-        while(ptrCourantl2 != NULL)
-        {
-            int valeur = *(getPtrData(ptrCourantl2));
-            debut = ajoutEnFin(debut, valeur);
-            ptrCourantl2 = ptrCourantl2->suiv;
-        }
-        return debut;
-    }
-}
-
-
-T_liste findCell(T_liste l, int data)
-{
-    T_liste ptrCourant = l;
-    if (listeVide(l))
-    {
-        return NULL;
-    }
-    else
-    {
-        while(ptrCourant != NULL && (*(ptrCourant->data) != data))
-        {
-            ptrCourant = ptrCourant->suiv;
-        }
-
-        if(ptrCourant != NULL)
-        {
-            //printf("\nLe pointeur de la cellule recherchee est : %X", ptrCourant);
-            return ptrCourant;
-        }
-        else
-        {
-            //printf("\nL'element recherche n'est pas dans la liste doublement chainee");
-            return NULL;
-        }
-    }
-}
-
+// Paramètres : Une T_liste et un entier
+// Résultat : Un entier
+// Definition : Cette fonction donne le nombre de fois qu'apparait l'entier en paramètre dans la liste
 int getOccurences(T_liste l, int data)
 {
     T_liste ptrCourant = l;
@@ -471,7 +385,7 @@ int getOccurences(T_liste l, int data)
     }
     else
     {
-        while(ptrCourant != NULL)
+        while (ptrCourant != NULL)
         {
             if (*(ptrCourant->data) == data)
             {
@@ -484,23 +398,29 @@ int getOccurences(T_liste l, int data)
     return occurence;
 }
 
+// Paramètres : Une T_liste
+// Résultat : Aucun
+// Definition : Cette fonction tri une lste avec un tri par selection
 void tri_selection_liste(T_liste l)
 {
     T_liste current, j, min;
-    for(current = l; getptrNextCell(current) != NULL; current = getptrNextCell(current))
+    for (current = l; getptrNextCell(current) != NULL; current = getptrNextCell(current))
     {
         min = current;
-        for(j = current; j != NULL; j = getptrNextCell(j))
+        for (j = current; j != NULL; j = getptrNextCell(j))
         {
-            if(*(getPtrData(j))< *(getPtrData(min)))
+            if (*(getPtrData(j)) < *(getPtrData(min)))
             {
                 min = j;
             }
         }
-        swapPtrData(current,min);
+        swapPtrData(current, min);
     }
 }
 
+// Paramètres : Une T_liste
+// Résultat : Un booleen
+// Definition : Cette fonction verifie si une liste est triee
 bool verifTriListe(T_liste l)
 {
     T_liste ptrCourant = l;

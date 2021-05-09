@@ -4,7 +4,6 @@ KORTSMIT Simon
 Version 1
 */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -15,9 +14,9 @@ Version 1
 
 int main()
 {
-    srand (time (NULL));
+    srand(time(NULL)); // Initialisation generateur de nombre aleatoire
 
-    choixTypeJeu();
+    choixTypeJeu(); // Lancmeent du jeu
 
     return 0;
 }
