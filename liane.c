@@ -14,8 +14,8 @@ void initLiane(T_liane *l)
 }
 
 // Paramètres : Une T_liane
-// Résultat : Un boolean
-// Definition : Cette fonction permet de savoir si une liste est vide ou non
+// Résultat : Un booléen
+// Definition : Cette fonction permet de savoir si une liane est vide ou non
 bool lianeVide(T_liane l)
 {
     return (l==NULL);
@@ -28,7 +28,7 @@ void debugLiane(T_liane l)
 {
     T_liane ptrCourant = l;
     printf("Liste\n-----\n");
-    while(ptrCourant != NULL) //Pour chaque case afficher
+    while(ptrCourant != NULL) //Pour chaque case affichee
     {
         printf("##########\n");
         printf("# Ptr case d'avant: %X\n", ptrCourant->prec);
