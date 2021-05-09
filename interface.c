@@ -125,7 +125,7 @@ T_jungle creationJungle()
     return jungle; // On retourne la jungle initialisée
 }
 
-// Paramètres : Une jungle "jungle" et un singe "singe"
+// Paramètres : Une jungle "jungle" et un pointeur de singe "singe"
 // Résultat : Un booléen representant si le pointeur courant de la liane doit avancer d'une liane ou pas pour le prochain tour
 // Definition : Cette fonction permet à l'utilisateur de choisir la direction que le singe doit emprunter selon les possibilités
 bool choixDirection(T_jungle jungle, T_singe* singe)
@@ -178,7 +178,7 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
     return false;
 }
 
-// Paramètres : Une jungle "jungle" et un singe "singe"
+// Paramètres : Une jungle "jungle" et un pointeur de singe "singe"
 // Résultat : Un booléen representant si le pointeur courant de la liane doit avancer d'une liane ou pas pour le prochain tour
 // Definition : Cette fonction permet d'avoir un mode automatique ou l'ordinateur joue tout seul au jeu
 bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
