@@ -51,4 +51,6 @@ void triNextLiane(T_jungle jungle);
 
 bool verifTriLiane(T_jungle jungle);
 
+T_jungle freeJungle(T_jungle j);
+
 #endif // JUNGLE_H_INCLUDED

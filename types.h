@@ -36,4 +36,6 @@ void remplirPointAccroche(T_pointAccroche *pt_accroche, int val, T_singe *singe)
 
 void afficheListePref(T_singe singe);
 
+T_pointAccroche *freePA(T_pointAccroche *pt_accroche);
+
 #endif // TYPES_H_INCLUDED

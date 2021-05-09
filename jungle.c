@@ -170,7 +170,8 @@ bool verifHaut(T_jungle jungle, T_singe singe)
     int hauteurSinge = getHauteurSinge(liane_courante); // Declaration d'un entier précisant la hauteur du singe (le plus haut est le point 0)
 
     if (verifSingePresent(*getPA(getptrFirstPA(liane_courante))) || (getNbrePA(liane_suivante)-1 < hauteurSinge-1)) // Si le singe est sur le point d'accorche le plus haut
-    {                                                                                                               // Ou si le nombre de points d'accroche de la liane suivante est inférieure de 2 cases ou plus par rapport à la hauteur du singe actuelle
+    {
+        // Ou si le nombre de points d'accroche de la liane suivante est inférieure de 2 cases ou plus par rapport à la hauteur du singe actuelle
         return false; // Alors la fonction retourne que ce n'est pas possible
     }
     int nombreCible = getValPointAccroche(*(getPA(getPAEnN(liane_suivante, hauteurSinge-1)))); // Declaration d'un entier qui est la valeur de l'entier du point d'accroche cible
@@ -378,4 +379,28 @@ bool verifTriLiane(T_jungle jungle)
         //printf("\nLISTE TRIEE");
         return true; // Si toute la première condition if est toujours vérifiée, on sort de la boucle while et la liste est alors bien triée
     }
+}
+
+// Paramètres : Une T_jungle
+// Résultat : Une T_jungle
+// Definition : Cette fonction libère la mémoire prise par une jungle
+T_jungle freeJungle(T_jungle j)
+{
+    T_jungle ptrCourant = j;
+    if (jungleVide(j))
+    {
+        return NULL;
+    }
+    else
+    {
+        while(!jungleVide(getNextLiane(ptrCourant)))
+        {
+            freeLiane(*(getLiane(ptrCourant)));
+            ptrCourant = getNextLiane(ptrCourant);
+            free(ptrCourant->prec);
+        }
+        freeLiane(*(getLiane(ptrCourant)));
+        free(ptrCourant);
+    }
+    return NULL;
 }

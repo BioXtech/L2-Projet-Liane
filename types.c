@@ -40,3 +40,12 @@ int getValPointAccroche(T_pointAccroche pt_accroche)
 {
     return pt_accroche.val;
 }
+
+// Paramètres : Un point d'accroche
+// Résultat : Un point d'accroche
+// Definition : Cette fonction libère la mémoire prise par un point d'accroche
+T_pointAccroche *freePA(T_pointAccroche *pt_accroche)
+{
+    free(pt_accroche);
+    return NULL;
+}

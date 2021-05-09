@@ -29,5 +29,7 @@ int getHauteurSinge(T_liane l);
 void swapPA( T_liane source, T_liane destination );
 void tri_selection_liane(T_liane l);
 
+T_liane freeLiane(T_liane l);
+
 
 #endif // LIANE_H_INCLUDED

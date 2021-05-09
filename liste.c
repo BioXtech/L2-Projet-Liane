@@ -162,4 +162,27 @@ int getOccurences(T_liste l, int data)
     return occurence; // On retoure finalement le compteur d'occurences
 }
 
+// Paramètres : Une T_liste
+// Résultat : Une T_liste
+// Definition : Cette fonction libère la mémoire prise par une liste
+T_liste freeListe(T_liste l)
+{
+    T_liste ptrCourant = l;
+    if (listeVide(l))
+    {
+        return NULL;
+    }
+    else
+    {
+        while(!listeVide(getptrNextCell(ptrCourant)))
+        {
+            free(getPtrData(ptrCourant));
+            ptrCourant = getptrNextCell(ptrCourant);
+            free(ptrCourant->prec);
+        }
+        free(getPtrData(ptrCourant));
+        free(ptrCourant);
+    }
+    return NULL;
+}
 

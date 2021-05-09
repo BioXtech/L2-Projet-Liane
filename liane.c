@@ -275,3 +275,27 @@ void tri_selection_liane(T_liane l)
         swapPA(current,min); // Et a la fin on echange les deux cases
     }
 }
+
+// Paramètres : Une T_liane
+// Résultat : Une T_liane
+// Definition : Cette fonction libère la mémoire prise par une liane
+T_liane freeLiane(T_liane l)
+{
+    T_liane ptrCourant = l;
+    if (lianeVide(l))
+    {
+        return NULL;
+    }
+    else
+    {
+        while(!lianeVide(getptrNextPA(ptrCourant)))
+        {
+            freePA(getPA(ptrCourant));
+            ptrCourant = getptrNextPA(ptrCourant);
+            free(ptrCourant->prec);
+        }
+        freePA(getPA(ptrCourant));
+        free(ptrCourant);
+    }
+    return NULL;
+}

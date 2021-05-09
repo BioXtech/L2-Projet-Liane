@@ -152,26 +152,26 @@ bool choixDirection(T_jungle jungle, T_singe* singe)
         // Switch case permettant d'effectuer le choix de l'utilisateur en appelant la fonction correspondante
         switch(numero_menu)
         {
-            case 1 :
-                printf("\nVous avez choisi d'aller en haut\n");
-                return allerEnHaut(jungle, singe);
-            case 2 :
-                printf("\nVous avez choisi d'aller en face\n");
-                return allerEnFace(jungle, singe);
-            case 3 :
-                printf("\nVous avez choisi d'aller en bas\n");
-                return allerEnBas(jungle, singe);
-            case 4 :
-                printf("\nVous avez invoque le dieu DONKEY-KONG !!!\n");
-                triNextLiane(jungle);
-                return false;
-            case 5 :
-                printf("\nVous avez choisi de sauter a l'eau\n");
-                sauterEau();
-                break;
-            default :
-                printf("\nVotre choix n'est pas valide, saisissez un numero entre 1 et 5\n");
-                break;
+        case 1 :
+            printf("\nVous avez choisi d'aller en haut\n");
+            return allerEnHaut(jungle, singe);
+        case 2 :
+            printf("\nVous avez choisi d'aller en face\n");
+            return allerEnFace(jungle, singe);
+        case 3 :
+            printf("\nVous avez choisi d'aller en bas\n");
+            return allerEnBas(jungle, singe);
+        case 4 :
+            printf("\nVous avez invoque le dieu DONKEY-KONG !!!\n");
+            triNextLiane(jungle);
+            return false;
+        case 5 :
+            printf("\nVous avez choisi de sauter a l'eau\n");
+            sauterEau();
+            break;
+        default :
+            printf("\nVotre choix n'est pas valide, saisissez un numero entre 1 et 5\n");
+            break;
         }
     }
     while(numero_menu < 1 && numero_menu > 5); // Verifie si le nombre rentre correspond a un choix possible
@@ -217,23 +217,23 @@ bool choixDirectionAuto(T_jungle jungle, T_singe* singe)
     // Switch case permettant d'effectuer le choix precedent
     switch(numero_menu)
     {
-        case 1 :
-            printf("\nLe singe est alle en haut\n");
-            return allerEnHaut(jungle, singe);
-        case 2 :
-            printf("\nLe singe est alle en face\n");
-            return allerEnFace(jungle, singe);
-        case 3 :
-            printf("\nLe singe est alle en bas\n");
-            return allerEnBas(jungle, singe);
-        case 4 :
-            printf("\nInvocation du dieu DONKEY-KONG !!!\n");
-            triNextLiane(jungle);
-            return false;
-        default :
-            printf("\nLe singe a saute a l'eau\n");
-            sauterEau();
-            break;
+    case 1 :
+        printf("\nLe singe est alle en haut\n");
+        return allerEnHaut(jungle, singe);
+    case 2 :
+        printf("\nLe singe est alle en face\n");
+        return allerEnFace(jungle, singe);
+    case 3 :
+        printf("\nLe singe est alle en bas\n");
+        return allerEnBas(jungle, singe);
+    case 4 :
+        printf("\nInvocation du dieu DONKEY-KONG !!!\n");
+        triNextLiane(jungle);
+        return false;
+    default :
+        printf("\nLe singe a saute a l'eau\n");
+        sauterEau();
+        break;
     }
     return false;
 }
@@ -270,6 +270,9 @@ void jouer(bool autoMode)
     printf("Vous avez gagne !\n");
     printf("Le singe a reussi a traverser la riviere !\n");
 
+    jungle = freeJungle(jungle);
+    singe.listeIntPreferes = freeListe(singe.listeIntPreferes);
+
 }
 
 // Paramètres : Aucun
@@ -295,17 +298,17 @@ void choixTypeJeu()
         // Switch permettant d'appeler la fonction de jeu avec le mode correspondant en parametre
         switch(numero_menu)
         {
-            case 1 :
-                printf("\nVous avez choisi le mode manuel\n");
-                jouer(false);
-                break;
-            case 2 :
-                printf("\nVous avez choisi le mode automatique\n");
-                jouer(true);
-                break;
-            default :
-                printf("\nNumero non compris entre 1 et 2\n");
-                break;
+        case 1 :
+            printf("\nVous avez choisi le mode manuel\n");
+            jouer(false);
+            break;
+        case 2 :
+            printf("\nVous avez choisi le mode automatique\n");
+            jouer(true);
+            break;
+        default :
+            printf("\nNumero non compris entre 1 et 2\n");
+            break;
         }
     }
     while(numero_menu != 1 && numero_menu != 2);

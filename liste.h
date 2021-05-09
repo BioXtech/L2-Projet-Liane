@@ -20,4 +20,6 @@ int* getPtrData(T_liste l);
 int getNbreCell(T_liste l);
 int getOccurences(T_liste l, int data);
 
+T_liste freeListe(T_liste l);
+
 #endif // LISTE_H_INCLUDED
