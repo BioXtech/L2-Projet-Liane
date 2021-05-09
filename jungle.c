@@ -156,6 +156,7 @@ T_jungle genererJungle()
     {
         liane = genererLiane(); // On fait appel à la fonction de génération d'une liane
         jungle = ajoutLianeAJungle(jungle, liane); // Puis on ajoute la liane créée à la jungle
+    }
     return jungle; // On retourne la jungle finale
 }
 
@@ -332,6 +333,7 @@ void allerPremiereLiane(T_jungle jungle, T_singe *singe)
 // Paramètres : Aucun
 // Résultat : Aucun
 // Definition : Cette fonction permet de faire sauter le singe à l'eau (affichage d'un printf console) et de terminer le programme
+void sauterEau()
 {
     printf("\nPLOUF !\n");
     exit(EXIT_SUCCESS);
